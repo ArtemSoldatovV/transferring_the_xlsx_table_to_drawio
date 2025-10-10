@@ -1,5 +1,10 @@
 package org.example;
 
+import org.apache.poi.ss.usermodel.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
 import java.util.ArrayList;
 
 public class Converting_Tabular_Data {
@@ -7,8 +12,7 @@ public class Converting_Tabular_Data {
     ArrayList<String> height_width;
     int number_height;
     int number_width;
-    public Converting_Tabular_Data(ArrayList<String> height_width, int number_height, int number_width){
-    }
+
     //table_is_in_text
     //String table_text = "";
 
@@ -16,10 +20,12 @@ public class Converting_Tabular_Data {
     //.\t|.\n
     //(.)\t|(.*)
 
-    public static Converting_Tabular_Data reading_from_text(String table_text){
+    //чтение из текста
+    public void reading_from_text(String table_text){
         String[] height_height = table_text.split("\n");
         int number_height = height_height.length;
         ArrayList<String> height_width = new ArrayList<String>();
+
         //-1 потому, что может быть таблица с обеденными ячейками для названия таблицы
         int number_width = height_height[-1].split("\t").length;
 
@@ -30,15 +36,69 @@ public class Converting_Tabular_Data {
             }
 
         }
-        return new Converting_Tabular_Data(height_width, number_height, number_width);
+        this.height_width = height_width;
+        this.number_height = number_height;
+        this.number_width = number_width;
+    }
+//////////////////////////////////////////////
+    //чтение из excel
+    public void reading_from_excel(String name_of_the_excel_file, String name_sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow){
+        try {
+            var book = loadWorkbook(name_of_the_excel_file);
+            var height_width = readColumn(book.createSheet(name_sheet), columnIndex_star, columnIndex_end, startRow, endRow );
+
+            var number_width = endRow - startRow + 1;
+            var number_height = columnIndex_end - columnIndex_star + 1;
+
+            this.height_width = height_width;
+            this.number_height = number_height;
+            this.number_width = number_width;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void /*Converting_Tabular_Data*/ reading_from_excel(String name_of_the_excel_file){
-        Workbook wb = new Workbook(name_of_the_excel_file);
+    // Загрузка Workbook из файла
+    public static Workbook loadWorkbook(String filePath) throws IOException {
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            return WorkbookFactory.create(fis);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-
-        return ;
     }
+
+    // Получение значения ячейки как строки
+    public static String getCellValue(Row row, int cellIndex) {
+        Cell cell = row.getCell(cellIndex);
+        if (cell == null) {
+            return "";
+        }
+        DataFormatter formatter = new DataFormatter();
+        return formatter.formatCellValue(cell);
+    }
+
+    // Чтение столбца в диапазоне строк excel
+    public static ArrayList<String> readColumn(Sheet sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow) {
+        ArrayList<String> values = new ArrayList<>();
+
+        for (int i = startRow; i <= endRow; i++) {
+            Row row = sheet.getRow(i);
+
+            for (int i2 = columnIndex_star; i2 <= columnIndex_end; i2++){
+                if (row != null) {
+                    values.add(getCellValue(row, i2 ));
+                } else {
+                    values.add("");
+                }
+            }
+
+        }
+
+        return values;
+    }
+
 
     public ArrayList<String> getHeight_width() {return height_width;}
     public void setHeight_width(ArrayList<String> height_width) {this.height_width = height_width;}

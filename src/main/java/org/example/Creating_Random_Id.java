@@ -17,7 +17,7 @@ public class Creating_Random_Id {
     }
 
     public static String character_selection(){
-        //исключение 45--
+        // 45 -
         int[] EN = {65, 90, 97, 122};//A-65 Z-90 a-97 z-122
         int[] number = {48, 57};//0-48 9-57
         String id ="";
