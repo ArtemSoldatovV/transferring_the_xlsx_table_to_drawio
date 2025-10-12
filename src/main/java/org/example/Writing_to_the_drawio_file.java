@@ -13,8 +13,6 @@ public class Writing_to_the_drawio_file {
         try {
             Path path = Paths.get(file_path_and_or_name);//name.drawio
             String content = new String( Files.readAllBytes(path) );
-            //System.out.println(content);
-            //String content_2 = new String(Files.readAllBytes(Paths.get(file_path_and_or_name)));
 
             content = content.replaceAll("<root>", "<root>" + the_billing_table);
 

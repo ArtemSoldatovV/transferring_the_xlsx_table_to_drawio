@@ -10,6 +10,7 @@ public class Main_Creating {
         var text = c_table.create(c_tabulalr_data.height_width,  y,x  ,c_tabulalr_data.number_height ,c_tabulalr_data.number_width ,  height,width);
         writing.record(file_path_and_or_name, text);
     }
+
     public void work(String file_path_and_or_name){
         int x = 0; int y = 0;
         int height = 40; int width = 60;

@@ -9,7 +9,7 @@ public class Creating_Random_Id {
         String max ="i5xR082weA8DU3b7qYcW";
         String id ="";
 
-        for (int i =0; i <max.length();i++ ){
+        for (int i =0; i <max.length(); i++ ){
             id += character_selection();
         }
 

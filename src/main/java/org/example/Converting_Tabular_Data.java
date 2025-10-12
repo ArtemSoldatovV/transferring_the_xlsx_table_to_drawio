@@ -13,13 +13,6 @@ public class Converting_Tabular_Data {
     int number_height;
     int number_width;
 
-    //table_is_in_text
-    //String table_text = "";
-
-    //\n
-    //.\t|.\n
-    //(.)\t|(.*)
-
     //чтение из текста
     public void reading_from_text(String table_text){
         String[] height_height = table_text.split("\n");
