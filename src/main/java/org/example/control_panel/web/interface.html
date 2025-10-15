@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>POST запрос пример</title>
+</head>
+<body>
+<!--обязательные -->
+<div>
+<input type="text" id="table_in_the_text" name="table_in_the_text" placeholder="путь до файла" value="текст таблицы" />
+<input type="text" id="path_excel" name="path_excel" placeholder="путь до файла" value="путь до файла excel" />
+
+<input type="text" id="path_draw" name="path_draw" placeholder="путь до файла" value="путь до файла draw" />
+</div>
+<!--необязательные -->
+<div>
+    <input type="text" id="height" name="height" placeholder="высота ячеек" value="10" />
+    <input type="text" id="width" name="width" placeholder="ширина ячеек" value="10" />
+    <input type="text" id="y" name="y" placeholder="позиция по y" value="0" />
+    <input type="text" id="x" name="x" placeholder="позиция по x" value="0" />
+</div>
+
+<div>
+    <button id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
+    <button id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
+</div>
+
+<script>
+    const PT = document.getElementById('sendingThePathToTheTable');
+    const TT = document.getElementById('sendTheTabletText');
+    if (!TT || !PT) {
+    console.error('Кнопка не найдена на странице!');
+    } else {
+    PT.addEventListener('click', () => {
+        const path_excel = document.getElementById('path_excel').value;
+        const path_draw = document.getElementById('path_draw').value;
+        const height = Number(document.getElementById('height').value);
+        const width = Number(document.getElementById('width').value);
+        const y = Number(document.getElementById('y').value);
+        const x = Number(document.getElementById('x').value);
+        fetch('http://localhost:8080/process', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path_draw, path_excel, height, width, y, x })
+        })
+    })
+    }
+
+    TT.addEventListener('click', () => {
+        const table_in_the_text = document.getElementById('table_in_the_text').value;
+        const path_draw = document.getElementById('path_draw').value;
+        const height = Number(document.getElementById('height').value);
+        const width = Number(document.getElementById('width').value);
+        const y = Number(document.getElementById('y').value);
+        const x = Number(document.getElementById('x').value);
+        fetch('http://localhost:8080/process', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path_draw, table_in_the_text, height, width, y, x })
+        })
+    })
+
+
+
+
+
+
+
+<!--    const btn = document.getElementById('sendBtn');-->
+<!--    if (!btn) {-->
+<!--      console.error('Кнопка не найдена на странице!');-->
+<!--    } else -->
+<!--    {-->
+<!--      btn.addEventListener('click', () => {-->
+<!--        const path_draw = document.getElementById('path_draw').value;-->
+<!--        const height = Number(document.getElementById('height').value);-->
+<!--        const width = Number(document.getElementById('width').value);-->
+<!--        const y = Number(document.getElementById('y').value);-->
+<!--        const x = Number(document.getElementById('x').value);-->
+
+<!--        console.log('Сегодня данные отправляем:', { path_draw, height, width, y, x });-->
+
+<!--        fetch('http://localhost:8080/process', {-->
+<!--          method: 'POST',-->
+<!--          headers: { 'Content-Type': 'application/json' },-->
+<!--          body: JSON.stringify({ path_draw, height, width, y, x })-->
+<!--        })-->
+<!--        .then(response => {-->
+<!--          if (!response.ok) throw new Error('Сервер вернул ошибку ' + response.status);-->
+<!--          return response.json();-->
+<!--        })-->
+<!--        .then(data => {-->
+<!--          console.log('Ответ сервера:', data.response);-->
+<!--        })-->
+<!--        .catch(err => {-->
+<!--          console.error('Ошибка при запросе:', err);-->
+<!--        });-->
+<!--      });-->
+<!--    }-->
+</script>
+</body>
+</html>
