@@ -14,8 +14,8 @@
 </div>
 <!--необязательные -->
 <div>
-    <input type="text" id="height" name="height" placeholder="высота ячеек" value="10" />
-    <input type="text" id="width" name="width" placeholder="ширина ячеек" value="10" />
+    <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" />
+    <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" />
     <input type="text" id="y" name="y" placeholder="позиция по y" value="0" />
     <input type="text" id="x" name="x" placeholder="позиция по x" value="0" />
 </div>
@@ -59,44 +59,6 @@
             body: JSON.stringify({ path_draw, table_in_the_text, height, width, y, x })
         })
     })
-
-
-
-
-
-
-
-<!--    const btn = document.getElementById('sendBtn');-->
-<!--    if (!btn) {-->
-<!--      console.error('Кнопка не найдена на странице!');-->
-<!--    } else -->
-<!--    {-->
-<!--      btn.addEventListener('click', () => {-->
-<!--        const path_draw = document.getElementById('path_draw').value;-->
-<!--        const height = Number(document.getElementById('height').value);-->
-<!--        const width = Number(document.getElementById('width').value);-->
-<!--        const y = Number(document.getElementById('y').value);-->
-<!--        const x = Number(document.getElementById('x').value);-->
-
-<!--        console.log('Сегодня данные отправляем:', { path_draw, height, width, y, x });-->
-
-<!--        fetch('http://localhost:8080/process', {-->
-<!--          method: 'POST',-->
-<!--          headers: { 'Content-Type': 'application/json' },-->
-<!--          body: JSON.stringify({ path_draw, height, width, y, x })-->
-<!--        })-->
-<!--        .then(response => {-->
-<!--          if (!response.ok) throw new Error('Сервер вернул ошибку ' + response.status);-->
-<!--          return response.json();-->
-<!--        })-->
-<!--        .then(data => {-->
-<!--          console.log('Ответ сервера:', data.response);-->
-<!--        })-->
-<!--        .catch(err => {-->
-<!--          console.error('Ошибка при запросе:', err);-->
-<!--        });-->
-<!--      });-->
-<!--    }-->
 </script>
 </body>
 </html>

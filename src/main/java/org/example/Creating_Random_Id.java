@@ -6,6 +6,7 @@ public class Creating_Random_Id {
         //примеры
         //-r2dthNOID2k0gEMgki2
         //i5xR082weA8DU3b7qYcW
+        //12345678901234567890
         String max ="i5xR082weA8DU3b7qYcW";
         String id ="";
 
@@ -25,13 +26,14 @@ public class Creating_Random_Id {
             return "0";
         }
         else if(rnd(0,5)==1){
-            return String.valueOf( rnd(EN[0],EN[1]) );
+            return String.valueOf( (char) rnd(EN[0],EN[1]) );
         }
-        else if(rnd(0,5)==2) {
-            return String.valueOf( rnd(EN[2],EN[3]) );
+        else if(rnd(0,3)==2) {
+            return String.valueOf( (char) rnd(EN[2],EN[3]) );
         }
         else {
-            return String.valueOf( rnd(number[0],EN[1]) );
+
+            return String.valueOf( (char) rnd(number[0],number[1]) );
         }
     }
 

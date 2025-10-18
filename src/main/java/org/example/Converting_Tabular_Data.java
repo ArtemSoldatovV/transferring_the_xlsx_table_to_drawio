@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Converting_Tabular_Data {
 
@@ -15,16 +17,16 @@ public class Converting_Tabular_Data {
 
     //чтение из текста
     public void reading_from_text(String table_text){
-        String[] height_height = table_text.split("\n");
+        table_text = table_text.replace("\\n", "\n").replace("\\t", "\t");
+        String[] height_height = table_text.split("\\n");
         int number_height = height_height.length;
         ArrayList<String> height_width = new ArrayList<String>();
 
-        //-1 потому, что может быть таблица с обеденными ячейками для названия таблицы
-        int number_width = height_height[-1].split("\t").length;
+        int number_width = height_height[0].split("\\t").length;
 
         for (String i : height_height){
 
-            for (String q : i.split("\t")) {
+            for (String q : i.split("\\t")) {
                 height_width.add( q );
             }
 
@@ -32,6 +34,12 @@ public class Converting_Tabular_Data {
         this.height_width = height_width;
         this.number_height = number_height;
         this.number_width = number_width;
+    }
+
+    public String JSON_to_normal_string(String JSON_text){
+        Pattern pattern = Pattern.compile(" ");
+        Matcher matcher = pattern.matcher(JSON_text);
+        return matcher.replaceAll("\n");
     }
 //////////////////////////////////////////////
     //чтение из excel
