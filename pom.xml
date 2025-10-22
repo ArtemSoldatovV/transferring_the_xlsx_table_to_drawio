@@ -38,6 +38,32 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>3.5.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+<!---->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.opentest4j/opentest4j &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.opentest4j</groupId>-->
+<!--            <artifactId>opentest4j</artifactId>-->
+<!--            <version>1.2.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.20.0</version> <!-- замените на актуальную версию -->
+        </dependency>
+
+            <!-- Другие зависимости -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.20.0</version>
+        </dependency>
 
     </dependencies>
 

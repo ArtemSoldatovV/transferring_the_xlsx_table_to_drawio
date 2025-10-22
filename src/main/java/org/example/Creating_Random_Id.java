@@ -21,18 +21,15 @@ public class Creating_Random_Id {
         // 45 -
         int[] EN = {65, 90, 97, 122};//A-65 Z-90 a-97 z-122
         int[] number = {48, 57};//0-48 9-57
-        String id ="";
-        if (rnd(0,5)==0){
-            return "0";
-        }
-        else if(rnd(0,5)==1){
+        int character_selection = rnd(0,2);
+
+        if(character_selection==0){
             return String.valueOf( (char) rnd(EN[0],EN[1]) );
         }
-        else if(rnd(0,3)==2) {
+        else if(character_selection==1) {
             return String.valueOf( (char) rnd(EN[2],EN[3]) );
         }
         else {
-
             return String.valueOf( (char) rnd(number[0],number[1]) );
         }
     }

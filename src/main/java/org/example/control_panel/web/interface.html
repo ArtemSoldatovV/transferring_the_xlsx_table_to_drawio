@@ -16,8 +16,8 @@
 <div>
     <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" />
     <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" />
-    <input type="text" id="y" name="y" placeholder="позиция по y" value="0" />
     <input type="text" id="x" name="x" placeholder="позиция по x" value="0" />
+    <input type="text" id="y" name="y" placeholder="позиция по y" value="0" />
 </div>
 
 <div>
@@ -41,7 +41,7 @@
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, height, width, y, x })
+            body: JSON.stringify({ path_draw, path_excel, height, width, x, y })
         })
     })
     }
@@ -56,7 +56,7 @@
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, table_in_the_text, height, width, y, x })
+            body: JSON.stringify({ path_draw, table_in_the_text, height, width, x, y })
         })
     })
 </script>

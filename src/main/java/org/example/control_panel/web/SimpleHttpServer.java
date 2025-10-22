@@ -59,8 +59,8 @@ public class SimpleHttpServer {
                 Matcher path_excel = Pattern.compile("\"path_excel\":? ?\"(.*.xlsx)\"").matcher(requestBody);
                 Matcher matcher_height = Pattern.compile("\"height\":? ?(\\d*),").matcher(requestBody);
                 Matcher matcher_width = Pattern.compile("\"width\":? ?(\\d*),").matcher(requestBody);
-                Matcher matcher_y = Pattern.compile("\"y\":? ?(\\d*),").matcher(requestBody);
                 Matcher matcher_x = Pattern.compile("\"x\":? ?(\\d*),").matcher(requestBody);
+                Matcher matcher_y = Pattern.compile("\"y\":? ?(\\d*),").matcher(requestBody);
 
 
                 //проверка данных
@@ -71,7 +71,7 @@ public class SimpleHttpServer {
                         !matcher_height.matches() || !matcher_width.matches() || !matcher_y.matches() || !matcher_x.matches()){
                     System.out.println("Ошибка: неверные входные данные");
                 }
-                 else if ( check_path.matcher( path_draw.group() ).matches() || check_path.matcher( path_excel.group() ).matches()){
+                else if ( check_path.matcher( path_draw.group() ).matches() || check_path.matcher( path_excel.group() ).matches()){
                     System.out.println("Ошибка: путь имеет невозможные  символы");
                 }
                 else if(!check_table_text.matcher( table_in_the_text.group() ).matches()){
@@ -80,7 +80,7 @@ public class SimpleHttpServer {
                 //основное тело программы
                 //c_t_d.JSON_to_normal_string()  // return String
 //                if (matcher_height.find() & matcher_width.find() & matcher_y.find() & matcher_x.find()) {
-//                    m_c.work(path_draw.group() , Integer.parseInt( matcher_height.group() ), Integer.parseInt( matcher_width.group() ), Integer.parseInt( matcher_y.group() ), Integer.parseInt( matcher_x.group() ) );
+//                    m_c.work(path_draw.group() , Integer.parseInt( matcher_height.group() ), Integer.parseInt( matcher_width.group() ), Integer.parseInt( matcher_x.group() ), Integer.parseInt( matcher_y.group() ) );
 //                }
 //                else {
 //                    m_c.work( path_draw.group() );

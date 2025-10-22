@@ -46,7 +46,7 @@ public class Converting_Tabular_Data {
     public void reading_from_excel(String name_of_the_excel_file, String name_sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow){
         try {
             var book = loadWorkbook(name_of_the_excel_file);
-            var height_width = readColumn(book.createSheet(name_sheet), columnIndex_star, columnIndex_end, startRow, endRow );
+            var height_width = readColumn( book.getSheet(name_sheet), columnIndex_star, columnIndex_end, startRow, endRow );
 
             var number_width = endRow - startRow + 1;
             var number_height = columnIndex_end - columnIndex_star + 1;

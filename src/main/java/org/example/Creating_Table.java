@@ -17,7 +17,7 @@ public class Creating_Table {
 //    String id = generation_id();
 
 //есть ошибка в логике
-    public static String create(ArrayList<String> the_value_of_all_cells , int y, int x, int cells_in_height, int cells_in_width, int height, int width)
+    public static String create(ArrayList<String> the_value_of_all_cells , int x, int y, int cells_in_height, int cells_in_width, int height, int width)
     {
         String id = generation_id();
         int item_number = 1;//номер элемента
@@ -49,7 +49,7 @@ public class Creating_Table {
         return exit;
     }
 
-    private static String table_root(String id, int item_number, int y, int x, int cells_in_height, int cells_in_width, int height, int width){
+    private static String table_root(String id, int item_number, int x, int y, int cells_in_height, int cells_in_width, int height, int width){
         //начало таблицы
         String indent1 = "        ";
         String indent2 = "          ";
