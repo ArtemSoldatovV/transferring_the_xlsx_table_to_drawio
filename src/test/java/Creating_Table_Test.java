@@ -35,7 +35,7 @@ public class Creating_Table_Test {
         int cells_in_height = 3;
         int cells_in_width = 3;
         int height = 40; int width = 60;
-        String result = ct.create(the_value_of_all_cells, x, y, cells_in_height, cells_in_width,height, width);
+        String result = ct.create(the_value_of_all_cells, x, y, cells_in_height, cells_in_width,height, width, 1);
         //надо по строчно проверить
         // значение id // id="[\w0-9]*-[0-9]*"
         // x и y // " x=\" " x="[0-9]*\"" // " y=\" " y=\"[0-9]*\""
