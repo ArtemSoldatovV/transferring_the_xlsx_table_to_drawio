@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,12 +13,16 @@ import java.util.regex.Pattern;
 
 public class Converting_Tabular_Data {
 
+    private static final Logger logger = LogManager.getLogger(Converting_Tabular_Data.class);
+
     ArrayList<String> height_width;
     int number_height;
     int number_width;
 
     //чтение из текста
     public void reading_from_text(String table_text){
+        logger.info("создание таблицы из текста");
+
         table_text = table_text.replace("\\n", "\n").replace("\\t", "\t");
         String[] height_height = table_text.split("\\n");
         int number_height = height_height.length;
@@ -45,6 +51,7 @@ public class Converting_Tabular_Data {
     //чтение из excel
     public void reading_from_excel(String name_of_the_excel_file, String name_sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow){
         try {
+            logger.info("создание таблицы из файла");
             var book = loadWorkbook(name_of_the_excel_file);
             var height_width = readColumn( book.getSheet(name_sheet), columnIndex_star, columnIndex_end, startRow, endRow );
 
@@ -56,6 +63,7 @@ public class Converting_Tabular_Data {
             this.number_width = number_width;
 
         } catch (IOException e) {
+            logger.fatal("ошибка в reading_from_excel");
             throw new RuntimeException(e);
         }
     }
@@ -65,6 +73,7 @@ public class Converting_Tabular_Data {
         try (FileInputStream fis = new FileInputStream(filePath)) {
             return WorkbookFactory.create(fis);
         }catch (IOException e) {
+            logger.fatal("чтение файла привело к ошибке по пути " + filePath);
             throw new RuntimeException(e);
         }
 

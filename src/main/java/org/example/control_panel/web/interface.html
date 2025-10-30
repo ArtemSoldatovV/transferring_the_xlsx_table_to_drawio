@@ -4,17 +4,24 @@
     <meta charset="utf-8" />
     <title>POST запрос пример</title>
     <style>
+        .style_div{
+            outline: 2px solid #000;
+        }
         .box1 {
             width: 410px;
             padding: 10px;
-            outline: 2px solid #000;
             margin-bottom: 10px;
+        }
+        .box2 {
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 <!--обязательные -->
-<div class="box1">
+<div class="box1 style_div">
     <input type="text" id="path_draw" name="path_draw" placeholder="путь до файла draw"  />
     <div></div>
     <input type="text" id="style" name="style" placeholder="стиль от 1 до 5" value="1" /><div>стиль от 1 до 5. по умолчанию 1</div>
@@ -30,18 +37,27 @@
             <button id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
 
             <input type="text" id="excel_sheet" name="excel_sheet" placeholder="название листа" value="" /><div></div>
-            <input type="text" id="columnIndex_star" name="columnIndex_star" placeholder="индекс верхнего столбца" value="" /><div> </div>
-            <input type="text" id="columnIndex_end" name="columnIndex_end" placeholder="индекс нижнего столбца" value="" /><div></div>
-            <input type="text" id="startRow" name="startRow" placeholder="первый ряд" value="" /><div></div>
-            <input type="text" id="endRow" name="endRow" placeholder="последний ряд" value="" /><div></div>
-
+            <div class="box2 style_div">инструкция по вводу данных:<br>
+                в excel столбцы обозначаются английскими буквами <br>
+                для ввода надо перевести буквы в цифры и потом изменить на -1 <br>
+                потому, что счёт в программировании начинается с 0
+                <br>
+                также надо изменить на -1 для ряда
+            </div>
+            <input type="text" id="columnIndex_start" name="columnIndex_start" placeholder="индекс первый столбца" value="" /><div> </div>
+            <input type="text" id="columnIndex_end" name="columnIndex_end" placeholder="индекс последний столбца" value="" /><div></div>
+            <input type="text" id="startRow" name="startRow" placeholder="верхнего ряд" value="" /><div></div>
+            <input type="text" id="endRow" name="endRow" placeholder="нижнего ряд" value="" /><div></div>
         </div>
     </div>
 </div>
-<!--необязательные -->
+<!--дополнительное -->
 <div>
+    <div>размер ячеек</div>
     <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" /><div>высота ячеек. по умолчанию 40</div>
     <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" /><div>ширина ячеек. по умолчанию 60</div>
+    <br>
+    <div>местоположение таблицы</div>
     <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
     <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
 </div>
@@ -58,11 +74,11 @@
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path(path_draw, path_excel, style, excel_sheet, columnIndex_star, columnIndex_end, startRow, endRow) {
+    function send_the_table_in_path(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, columnIndex_star, columnIndex_end, startRow, endRow })
+            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow })
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -80,7 +96,7 @@
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, columnIndex_star, columnIndex_end, startRow, endRow, height, width, x, y) {
+    function send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -106,8 +122,8 @@
         const style = Number(document.getElementById('style').value);
         const path_excel = document.getElementById('path_excel').value;
         const excel_sheet = document.getElementById('excel_sheet').value;
+        const columnIndex_start = Number(document.getElementById('columnIndex_start').value);
         const columnIndex_end = Number(document.getElementById('columnIndex_end').value);
-        const width = Number(document.getElementById('width').value);
         const startRow = Number(document.getElementById('startRow').value);
         const endRow = Number(document.getElementById('endRow').value);
 
@@ -118,9 +134,9 @@
         if (path_excel === "" || path_draw === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
-            send_the_table_in_path(path_draw, path_excel, style)
+            send_the_table_in_path(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow)
         }else{
-            send_the_table_in_path_augmented(path_draw, path_excel, height, width, x, y, style)
+            send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y)
         }
 
 

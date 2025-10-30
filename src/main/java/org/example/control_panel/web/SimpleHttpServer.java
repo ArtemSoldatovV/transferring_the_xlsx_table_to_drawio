@@ -10,6 +10,8 @@ import java.net.InetSocketAddress;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.Converting_Tabular_Data;
 import org.example.Main_Creating;
 
@@ -28,6 +30,8 @@ public class SimpleHttpServer {
     }
 
     static class MyHandler implements HttpHandler {
+
+        private static final Logger logger = LogManager.getLogger(MyHandler.class);
         // Разрешить доступ с этого источника
         private static final String ALLOWED_ORIGIN = "http://localhost:63342";
 
@@ -53,18 +57,13 @@ public class SimpleHttpServer {
                 String requestBody = new String(exchange.getRequestBody().readAllBytes(), "utf-8");
                 //входящие данные requestBody
                 System.out.println(requestBody);
-
-
                 //формируем ответ
                 String response = "{\"response\": \"подтверждение сообщение пришло\"}";
                 exchange.getResponseHeaders().add("Content-Type", "application/json");
                 exchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = exchange.getResponseBody();
-
-
                 os.write(response.getBytes());
                 os.close();
-
                 Matcher matcher_height = Pattern.compile("\"height\":? ?(\\d*),?").matcher(requestBody);
                 Matcher matcher_width = Pattern.compile("\"width\":? ?(\\d*),?").matcher(requestBody);
                 Matcher matcher_x = Pattern.compile("\"x\":? ?(\\d*),?").matcher(requestBody);
@@ -81,58 +80,118 @@ public class SimpleHttpServer {
                 Matcher columnIndex_end = Pattern.compile("\"columnIndex_end\":? ?(\\d*),?").matcher(requestBody);
                 Matcher startRow = Pattern.compile("\"startRow\":? ?(\\d*),?").matcher(requestBody);
                 Matcher endRow = Pattern.compile("\"endRow\":? ?(\\d*),?").matcher(requestBody);
-
                 //проверка данных
-                Pattern check_path = Pattern.compile("\\\\.*?[\\/\\|:\\?\"<>].*?\\\\");
+                Pattern check_path = Pattern.compile("([A-Z]:[\\\\a-zA-Zа-яА-Я0-9 ]*[a-zA-Zа-яА-Я0-9 ]\\.[a-zA-Z0-9]*)");
                 Pattern check_table_text = Pattern.compile("([\\wа-яА-я]*\\\\t|[\\wа-яА-я][^ ]* |\\w[^ ]$)*");
 
+                //эти переменные нужны для нормальной работы проверки верности входных данных, логика на примую через .find() работает не каректно
+                boolean boolean_path_draw = path_draw.find();
+                boolean boolean_matcher_style = matcher_style.find();
+                boolean boolean_table_in_the_text = table_in_the_text.find();
+                boolean boolean_path_excel = path_excel.find();
+                boolean boolean_excel_sheet = excel_sheet.find();
+                boolean boolean_columnIndex_star = columnIndex_star.find();
+                boolean boolean_columnIndex_end = columnIndex_end.find();
+                boolean boolean_startRow = startRow.find();
+                boolean boolean_endRow = endRow.find();
 
-                if(false == (  path_draw.find()
-                        && ( table_in_the_text.find() || path_excel.find() &&
-                        excel_sheet.find() && columnIndex_star.find() && columnIndex_end.find()
-                        && startRow.find() && endRow.find() )  )
-                ){
-                    System.out.println("Ошибка: неверные входные данные");
+                //group может вернуть String или IllegalStateException, что приводит к ошибками
+                String String_path_draw = "";
+                try {String_path_draw = path_draw.group(1);
+                }catch (IllegalStateException e) {String_path_draw = "";
                 }
-                else if ( check_path.matcher( path_draw.group() ).matches() || check_path.matcher( path_excel.group() ).matches()){
-                    System.out.println("Ошибка: путь имеет невозможные  символы");
+                String String_matcher_style = matcher_style.group(1);
+                try {String_matcher_style = matcher_style.group(1);
+                }catch (IllegalStateException e) {String_matcher_style = "";
                 }
-                else if( !check_table_text.matcher( table_in_the_text.group() ).matches()){
-                    System.out.println("Ошибка: текст таблицы неправильный или повреждённый");
+                String String_table_in_the_text = "";
+                try {String_table_in_the_text = table_in_the_text.group(1);
+                }catch (IllegalStateException e) {String_table_in_the_text = "";
+                }
+                String String_path_excel = "";
+                try {String_path_excel = path_excel.group(1);
+                }catch (IllegalStateException e) {String_path_excel = "";
+                }
+                String String_excel_sheet = "";
+                try {String_excel_sheet = excel_sheet.group(1);
+                }catch (IllegalStateException e) {String_excel_sheet = "";
+                }
+                String String_columnIndex_star = "";
+                try {String_columnIndex_star = columnIndex_star.group(1);
+                }catch (IllegalStateException e) {String_columnIndex_star = "";
+                }
+                String String_columnIndex_end = "";
+                try {String_columnIndex_end = columnIndex_end.group(1);
+                }catch (IllegalStateException e) {String_columnIndex_end = "";
+                }
+                String String_startRow = "";
+                try {String_startRow = startRow.group(1);
+                }catch (IllegalStateException e) {String_startRow = "";
+                }
+                String String_endRow = "";
+                try {String_endRow = endRow.group(1);
+                }catch (IllegalStateException e) {String_endRow = "";
+                }
+                String String_height = "";
+                try {String_height = matcher_height.group(1);
+                }catch (IllegalStateException e) {String_height = "";
+                }
+                String String_width = "";
+                try {String_width = matcher_width.group(1);
+                }catch (IllegalStateException e) {String_width = "";
+                }
+                String String_x = "";
+                try {String_x = matcher_x.group(1);
+                }catch (IllegalStateException e) {String_x = "";
+                }
+                String String_y = "";
+                try {String_y = matcher_y.group(1);
+                }catch (IllegalStateException e) {String_y = "";
+                }
+
+                Boolean check_darw_path = check_path.matcher( String_path_draw ).matches();
+
+//                if( !(   boolean_path_draw && boolean_matcher_style
+//                        && (  boolean_table_in_the_text || ( boolean_path_excel &&
+//                        boolean_excel_sheet && boolean_columnIndex_star && boolean_columnIndex_end
+//                        && boolean_startRow && boolean_endRow )  )   )
+//                )
+//                {
+//                    logger.error("Ошибка: неверные входные данные");
+//                }
+                //else
+                if ( !check_darw_path ){
+                    logger.error("Ошибка: путь до файлв .drawio имеет невозможные символы");
                 }
                 else{
-
-                    if(table_in_the_text.find()){
-                        String text = c_t_d.JSON_to_normal_string(table_in_the_text.group());
-                        m_c.work(path_draw.group(), text, Integer.valueOf(matcher_style.group())
-                                , Integer.valueOf(matcher_height.group()), Integer.valueOf(matcher_width.group())
-                                , Integer.valueOf(matcher_x.group()), Integer.valueOf(matcher_y.group()) );
+                    //основное тело программы
+                    if(boolean_table_in_the_text){
+                        if( !check_table_text.matcher( String_table_in_the_text ).matches()){
+                            logger.error("Ошибка: текст таблицы неправильный или повреждённый");
+                        }else {
+                            String text = c_t_d.JSON_to_normal_string(String_table_in_the_text);
+                            m_c.work(String_path_draw, text, Integer.parseInt(String_matcher_style)
+                                    , Integer.parseInt(String_height), Integer.parseInt(String_width)
+                                    , Integer.parseInt(String_x), Integer.parseInt(String_y));
+                        }
                     }
                     else {
-                        m_c.work( path_draw.group(), Integer.valueOf(matcher_style.group())
-                                , Integer.valueOf(matcher_height.group()), Integer.valueOf(matcher_width.group())
-                                , Integer.valueOf(matcher_x.group()), Integer.valueOf(matcher_y.group())
-                                , path_excel.group(), excel_sheet.group()
-                                , Integer.valueOf(columnIndex_star.group()), Integer.valueOf(columnIndex_end.group())
-                                , Integer.valueOf(startRow.group()), Integer.valueOf(endRow.group())
-                                );
+                        if ( !check_path.matcher( String_path_excel ).matches() ){
+                            logger.error("Ошибка: путь до файлв .xlsx имеет невозможные символы");
+                        }else {
+                            m_c.work(String_path_draw, Integer.parseInt(String_matcher_style)
+                                    , Integer.parseInt(String_height), Integer.parseInt(String_width)
+                                    , Integer.parseInt(String_x), Integer.parseInt(String_y)
+                                    , String_path_excel, String_excel_sheet
+                                    , Integer.parseInt(String_columnIndex_star), Integer.parseInt(String_columnIndex_end)
+                                    , Integer.parseInt(String_startRow), Integer.parseInt(String_endRow)
+                            );
+                        }
                     }
-                    //m_c.work(  );
-                    //String name_of_the_draw_fil, String text_tabel, int style, int height, int width, int x, int y
-                    //String name_of_the_draw_fil, int style, int height, int width, int x, int y, String name_of_the_excel_fil,  String name_sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow
                 }
 
-                //основное тело программы
-//                c_t_d.JSON_to_normal_string()  // return String
-//                if (matcher_height.find() & matcher_width.find() & matcher_y.find() & matcher_x.find()) {
-//                    m_c.work(path_draw.group() , Integer.parseInt( matcher_height.group() ), Integer.parseInt( matcher_width.group() ), Integer.parseInt( matcher_x.group() ), Integer.parseInt( matcher_y.group() ) );
-//                }
-//                else {
-//                    m_c.work( path_draw.group() );
-//                }
-
-
             } else {
+                logger.error("мы вернули ответ 405");
                 exchange.sendResponseHeaders(405, -1); // Method Not Allowed
             }
         }

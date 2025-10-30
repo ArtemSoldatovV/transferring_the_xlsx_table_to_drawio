@@ -6,11 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Writing_to_the_drawio_file {
+    private static final Logger logger = LogManager.getLogger(Writing_to_the_drawio_file.class);
+
     public void record (String file_path_and_or_name, String the_billing_table){
         //читаем с каким файлом и работать вставляем таблицу
         try {
+            logger.info("чтение файла .xlsx");
             String where_to_record = "<mxCell id=\"1\" parent=\"0\" />";
             Path path = Paths.get(file_path_and_or_name);//name.drawio
             String content = new String( Files.readAllBytes(path) );
@@ -23,6 +28,7 @@ public class Writing_to_the_drawio_file {
             writer.flush();
 
         } catch (IOException e) {
+            logger.fatal("чтение файла привело к ошибке по пути " + the_billing_table);
             e.printStackTrace();
         }
     }
