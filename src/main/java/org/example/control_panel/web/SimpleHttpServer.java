@@ -64,22 +64,23 @@ public class SimpleHttpServer {
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
-                Matcher matcher_height = Pattern.compile("\"height\":? ?(\\d*),?").matcher(requestBody);
-                Matcher matcher_width = Pattern.compile("\"width\":? ?(\\d*),?").matcher(requestBody);
-                Matcher matcher_x = Pattern.compile("\"x\":? ?(\\d*),?").matcher(requestBody);
-                Matcher matcher_y = Pattern.compile("\"y\":? ?(\\d*),?").matcher(requestBody);
+
+                Matcher matcher_height = Pattern.compile("\"height\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher matcher_width = Pattern.compile("\"width\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher matcher_x = Pattern.compile("\"x\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher matcher_y = Pattern.compile("\"y\":? ?([0-9]*),?").matcher(requestBody);
 
                 Matcher path_draw = Pattern.compile("\"path_draw\":? ?\"(.*.drawio)\"").matcher(requestBody);
-                Matcher matcher_style = Pattern.compile("\"style\":? ?(\\d*),?").matcher(requestBody);
+                Matcher matcher_style = Pattern.compile("\"style\":? ?([0-9]*),?").matcher(requestBody);
 
                 Matcher table_in_the_text = Pattern.compile("\"table_in_the_text\":? ?\"([0-9a-zA-Zа-яА-Я\\\\t ]*)\",").matcher(requestBody);
 
                 Matcher path_excel = Pattern.compile("\"path_excel\":? ?\"(.*.xlsx)\"").matcher(requestBody);
                 Matcher excel_sheet = Pattern.compile("\"excel_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
-                Matcher columnIndex_star = Pattern.compile("\"columnIndex_star\":? ?(\\d*),?").matcher(requestBody);
-                Matcher columnIndex_end = Pattern.compile("\"columnIndex_end\":? ?(\\d*),?").matcher(requestBody);
-                Matcher startRow = Pattern.compile("\"startRow\":? ?(\\d*),?").matcher(requestBody);
-                Matcher endRow = Pattern.compile("\"endRow\":? ?(\\d*),?").matcher(requestBody);
+                Matcher columnIndex_star = Pattern.compile("\"columnIndex_start\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher columnIndex_end = Pattern.compile("\"columnIndex_end\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher startRow = Pattern.compile("\"startRow\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher endRow = Pattern.compile("\"endRow\":? ?([0-9]*),?").matcher(requestBody);
                 //проверка данных
                 Pattern check_path = Pattern.compile("([A-Z]:[\\\\a-zA-Zа-яА-Я0-9 ]*[a-zA-Zа-яА-Я0-9 ]\\.[a-zA-Z0-9]*)");
                 Pattern check_table_text = Pattern.compile("([\\wа-яА-я]*\\\\t|[\\wа-яА-я][^ ]* |\\w[^ ]$)*");
@@ -90,10 +91,7 @@ public class SimpleHttpServer {
                 boolean boolean_table_in_the_text = table_in_the_text.find();
                 boolean boolean_path_excel = path_excel.find();
                 boolean boolean_excel_sheet = excel_sheet.find();
-                boolean boolean_columnIndex_star = columnIndex_star.find();
-                boolean boolean_columnIndex_end = columnIndex_end.find();
-                boolean boolean_startRow = startRow.find();
-                boolean boolean_endRow = endRow.find();
+
 
                 //group может вернуть String или IllegalStateException, что приводит к ошибками
                 String String_path_draw = "";
@@ -116,50 +114,60 @@ public class SimpleHttpServer {
                 try {String_excel_sheet = excel_sheet.group(1);
                 }catch (IllegalStateException e) {String_excel_sheet = "";
                 }
+
                 String String_columnIndex_star = "";
-                try {String_columnIndex_star = columnIndex_star.group(1);
-                }catch (IllegalStateException e) {String_columnIndex_star = "";
+                try {
+                    boolean boolean_columnIndex_star = columnIndex_star.find();
+                    String_columnIndex_star = columnIndex_star.group(1);
+                }catch (IllegalStateException e) {String_columnIndex_star = "0";
                 }
                 String String_columnIndex_end = "";
-                try {String_columnIndex_end = columnIndex_end.group(1);
-                }catch (IllegalStateException e) {String_columnIndex_end = "";
+                try {
+                    boolean boolean_columnIndex_end = columnIndex_end.find();
+                    String_columnIndex_end = columnIndex_end.group(1);
+                }catch (IllegalStateException e) {String_columnIndex_end = "0";
                 }
+
                 String String_startRow = "";
-                try {String_startRow = startRow.group(1);
-                }catch (IllegalStateException e) {String_startRow = "";
+                try {
+                    boolean boolean_startRow = startRow.find();
+                    String_startRow = startRow.group(1);
+                }catch (IllegalStateException e) {String_startRow = "0";
                 }
                 String String_endRow = "";
-                try {String_endRow = endRow.group(1);
-                }catch (IllegalStateException e) {String_endRow = "";
+                try {
+                    boolean boolean_endRow = endRow.find();
+                    String_endRow = endRow.group(1);
+                }catch (IllegalStateException e) {String_endRow = "0";
                 }
+
                 String String_height = "";
-                try {String_height = matcher_height.group(1);
-                }catch (IllegalStateException e) {String_height = "";
+                try {
+                    boolean boolean_height = matcher_height.find(); //определение переменной boolean через .find() приводит к верной работе программы
+                    String_height = matcher_height.group(1);
+                }catch (IllegalStateException e) {String_height = "60";
                 }
                 String String_width = "";
-                try {String_width = matcher_width.group(1);
-                }catch (IllegalStateException e) {String_width = "";
+                try {
+                    boolean boolean_width = matcher_width.find();
+                    String_width = matcher_width.group(1);
+                }catch (IllegalStateException e) {String_width = "40";
                 }
                 String String_x = "";
-                try {String_x = matcher_x.group(1);
-                }catch (IllegalStateException e) {String_x = "";
+                try {
+                    boolean boolean_x = matcher_x.find();
+                    String_x = matcher_x.group(1);
+                }catch (IllegalStateException e) {String_x = "0";
                 }
                 String String_y = "";
-                try {String_y = matcher_y.group(1);
-                }catch (IllegalStateException e) {String_y = "";
+                try {
+                    boolean boolean_y = matcher_y.find();
+                    String_y = matcher_y.group(1);
+                }catch (IllegalStateException e) {String_y = "0";
                 }
 
                 Boolean check_darw_path = check_path.matcher( String_path_draw ).matches();
 
-//                if( !(   boolean_path_draw && boolean_matcher_style
-//                        && (  boolean_table_in_the_text || ( boolean_path_excel &&
-//                        boolean_excel_sheet && boolean_columnIndex_star && boolean_columnIndex_end
-//                        && boolean_startRow && boolean_endRow )  )   )
-//                )
-//                {
-//                    logger.error("Ошибка: неверные входные данные");
-//                }
-                //else
                 if ( !check_darw_path ){
                     logger.error("Ошибка: путь до файлв .drawio имеет невозможные символы");
                 }

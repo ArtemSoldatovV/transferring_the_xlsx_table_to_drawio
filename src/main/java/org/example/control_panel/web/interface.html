@@ -100,7 +100,7 @@
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, height, width, x, y, style })
+            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y})
         })
         .then(response => response.json())
         .then(data => console.log(data))

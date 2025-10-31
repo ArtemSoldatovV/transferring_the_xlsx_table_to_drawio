@@ -45,7 +45,8 @@ public class Converting_Tabular_Data {
     public String JSON_to_normal_string(String JSON_text){
         Pattern pattern = Pattern.compile(" ");
         Matcher matcher = pattern.matcher(JSON_text);
-        return matcher.replaceAll("\n");
+        String exit =  matcher.replaceAll("\n");
+        return exit;
     }
 //////////////////////////////////////////////
     //чтение из excel
@@ -54,9 +55,8 @@ public class Converting_Tabular_Data {
             logger.info("создание таблицы из файла");
             var book = loadWorkbook(name_of_the_excel_file);
             var height_width = readColumn( book.getSheet(name_sheet), columnIndex_star, columnIndex_end, startRow, endRow );
-
-            var number_width = endRow - startRow + 1;
-            var number_height = columnIndex_end - columnIndex_star + 1;
+            var number_height = endRow - startRow;
+            var number_width = columnIndex_end - columnIndex_star;
 
             this.height_width = height_width;
             this.number_height = number_height;
@@ -91,12 +91,13 @@ public class Converting_Tabular_Data {
 
     // Чтение столбца в диапазоне строк excel
     public static ArrayList<String> readColumn(Sheet sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow) {
+        //тут ошибка
         ArrayList<String> values = new ArrayList<>();
 
-        for (int i = startRow; i <= endRow; i++) {
+        for (int i = startRow; i < endRow; i++) {
             Row row = sheet.getRow(i);
 
-            for (int i2 = columnIndex_star; i2 <= columnIndex_end; i2++){
+            for (int i2 = columnIndex_star; i2 < columnIndex_end; i2++){
                 if (row != null) {
                     values.add(getCellValue(row, i2 ));
                 } else {
