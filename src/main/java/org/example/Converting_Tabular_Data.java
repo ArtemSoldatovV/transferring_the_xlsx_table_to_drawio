@@ -15,9 +15,9 @@ public class Converting_Tabular_Data {
 
     private static final Logger logger = LogManager.getLogger(Converting_Tabular_Data.class);
 
-    ArrayList<String> height_width;
-    int number_height;
-    int number_width;
+    private ArrayList<String> height_width;
+    private int number_height;
+    private int number_width;
 
     //чтение из текста
     public void reading_from_text(String table_text){
@@ -69,7 +69,7 @@ public class Converting_Tabular_Data {
     }
 
     // Загрузка Workbook из файла
-    public static Workbook loadWorkbook(String filePath) throws IOException {
+    private static Workbook loadWorkbook(String filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath)) {
             return WorkbookFactory.create(fis);
         }catch (IOException e) {
@@ -80,7 +80,7 @@ public class Converting_Tabular_Data {
     }
 
     // Получение значения ячейки как строки
-    public static String getCellValue(Row row, int cellIndex) {
+    private static String getCellValue(Row row, int cellIndex) {
         Cell cell = row.getCell(cellIndex);
         if (cell == null) {
             return "";
@@ -90,7 +90,7 @@ public class Converting_Tabular_Data {
     }
 
     // Чтение столбца в диапазоне строк excel
-    public static ArrayList<String> readColumn(Sheet sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow) {
+    private static ArrayList<String> readColumn(Sheet sheet, int columnIndex_star, int columnIndex_end, int startRow, int endRow) {
         //тут ошибка
         ArrayList<String> values = new ArrayList<>();
 

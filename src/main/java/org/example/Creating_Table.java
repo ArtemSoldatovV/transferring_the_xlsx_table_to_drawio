@@ -6,21 +6,10 @@ import static org.example.Creating_Random_Id.generation_id;
 
 
 public class Creating_Table {
-//    int height = 40;
-//    int width = 60;
-//    int y = 190 ;
-//    int x = 230 ;
-//    int cells_in_height = 3;
-//    int cells_in_width = 3;
-//    String cell_value = "w";
-//    int item_number = 1;
-//    String id = generation_id();
 
-//есть ошибка в логике
     public static String create(ArrayList<String> the_value_of_all_cells , int style , int x, int y, int cells_in_height, int cells_in_width, int height, int width)
     {
         String id = generation_id();
-        //тут гдето ошибка
         int item_number = 1;//номер элемента
         int total_number_of_cells = cells_in_height * cells_in_width;// скольк должно быть ячеек
         int how_many_cells_are_made = 0;// число ячеек
