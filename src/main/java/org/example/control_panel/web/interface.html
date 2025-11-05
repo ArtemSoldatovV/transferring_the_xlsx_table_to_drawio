@@ -38,14 +38,9 @@
 
             <input type="text" id="excel_sheet" name="excel_sheet" placeholder="название листа" value="" /><div></div>
             <div class="box2 style_div">инструкция по вводу данных:<br>
-                в excel столбцы обозначаются английскими буквами <br>
-                для ввода надо перевести буквы в цифры и изменить на -1 <br>
-                значение начало ряда и строки потому, что счёт в программировании начинается с 0
+                области таблицы обозначается таким шаблоном СтолбецСтрока:СтолбецСтрока пример: F1:H6
             </div>
-            <input type="text" id="columnIndex_start" name="columnIndex_start" placeholder="индекс первый столбца" value="" /><div> </div>
-            <input type="text" id="columnIndex_end" name="columnIndex_end" placeholder="индекс последний столбца" value="" /><div></div>
-            <input type="text" id="startRow" name="startRow" placeholder="верхнего ряд" value="" /><div></div>
-            <input type="text" id="endRow" name="endRow" placeholder="нижнего ряд" value="" /><div></div>
+            <input type="text" id="coordinates_of_the_selected_table" name="coordinates_of_the_selected_table" placeholder="области таблицы" value="" /><div></div>
         </div>
     </div>
 </div>
@@ -72,11 +67,11 @@
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow) {
+    function send_the_table_in_path(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow })
+            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table })
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -94,11 +89,11 @@
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y) {
+    function send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y})
+            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y})
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -120,10 +115,7 @@
         const style = Number(document.getElementById('style').value);
         const path_excel = document.getElementById('path_excel').value;
         const excel_sheet = document.getElementById('excel_sheet').value;
-        const columnIndex_start = Number(document.getElementById('columnIndex_start').value);
-        const columnIndex_end = Number(document.getElementById('columnIndex_end').value);
-        const startRow = Number(document.getElementById('startRow').value);
-        const endRow = Number(document.getElementById('endRow').value);
+        const coordinates_of_the_selected_table = document.getElementById('coordinates_of_the_selected_table').value;
 
         if (style > 5 || style < 1){
             style = Number(1);
@@ -132,9 +124,9 @@
         if (path_excel === "" || path_draw === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
-            send_the_table_in_path(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow)
+            send_the_table_in_path(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table)
         }else{
-            send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, columnIndex_start, columnIndex_end, startRow, endRow, height, width, x, y)
+            send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y)
         }
 
 

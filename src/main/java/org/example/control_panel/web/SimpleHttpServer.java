@@ -1,19 +1,18 @@
 package org.example.control_panel.web;
 
-import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.Converting_Tabular_Data;
+import org.example.Main_Creating;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.example.Converting_Tabular_Data;
-import org.example.Main_Creating;
 
 public class SimpleHttpServer {
 
@@ -77,10 +76,7 @@ public class SimpleHttpServer {
 
                 Matcher path_excel = Pattern.compile("\"path_excel\":? ?\"(.*.xlsx)\"").matcher(requestBody);
                 Matcher excel_sheet = Pattern.compile("\"excel_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
-                Matcher columnIndex_star = Pattern.compile("\"columnIndex_start\":? ?([0-9]*),?").matcher(requestBody);
-                Matcher columnIndex_end = Pattern.compile("\"columnIndex_end\":? ?([0-9]*),?").matcher(requestBody);
-                Matcher startRow = Pattern.compile("\"startRow\":? ?([0-9]*),?").matcher(requestBody);
-                Matcher endRow = Pattern.compile("\"endRow\":? ?([0-9]*),?").matcher(requestBody);
+                Matcher coordinates_of_the_selected_table = Pattern.compile("\"coordinates_of_the_selected_table\":? ?\"([a-zA-Z]*[0-9]*:[a-zA-Z]*[0-9]*)\",?").matcher(requestBody);
                 //проверка данных
                 Pattern check_path = Pattern.compile("([A-Z]:[\\\\a-zA-Zа-яА-Я0-9 ]*[a-zA-Zа-яА-Я0-9 ]\\.[a-zA-Z0-9]*)");
                 Pattern check_table_text = Pattern.compile("([\\wа-яА-я]*\\\\t|[\\wа-яА-я][^ ]* |\\w[^ ]$)*");
@@ -115,30 +111,11 @@ public class SimpleHttpServer {
                 }catch (IllegalStateException e) {String_excel_sheet = "";
                 }
 
-                String String_columnIndex_star = "";
+                String String_coordinates_of_the_selected_table = "";
                 try {
-                    boolean boolean_columnIndex_star = columnIndex_star.find();
-                    String_columnIndex_star = columnIndex_star.group(1);
-                }catch (IllegalStateException e) {String_columnIndex_star = "0";
-                }
-                String String_columnIndex_end = "";
-                try {
-                    boolean boolean_columnIndex_end = columnIndex_end.find();
-                    String_columnIndex_end = columnIndex_end.group(1);
-                }catch (IllegalStateException e) {String_columnIndex_end = "0";
-                }
-
-                String String_startRow = "";
-                try {
-                    boolean boolean_startRow = startRow.find();
-                    String_startRow = startRow.group(1);
-                }catch (IllegalStateException e) {String_startRow = "0";
-                }
-                String String_endRow = "";
-                try {
-                    boolean boolean_endRow = endRow.find();
-                    String_endRow = endRow.group(1);
-                }catch (IllegalStateException e) {String_endRow = "0";
+                    boolean boolean_coordinates_of_the_selected_table = coordinates_of_the_selected_table.find();
+                    String_coordinates_of_the_selected_table = coordinates_of_the_selected_table.group(1);
+                }catch (IllegalStateException e) {String_coordinates_of_the_selected_table = "";
                 }
 
                 String String_height = "";
@@ -191,8 +168,7 @@ public class SimpleHttpServer {
                                     , Integer.parseInt(String_height), Integer.parseInt(String_width)
                                     , Integer.parseInt(String_x), Integer.parseInt(String_y)
                                     , String_path_excel, String_excel_sheet
-                                    , Integer.parseInt(String_columnIndex_star), Integer.parseInt(String_columnIndex_end)
-                                    , Integer.parseInt(String_startRow), Integer.parseInt(String_endRow)
+                                    , String_coordinates_of_the_selected_table
                             );
                         }
                     }
