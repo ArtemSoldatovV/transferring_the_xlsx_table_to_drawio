@@ -39,9 +39,6 @@ public class Converting_Tabular_Data_Test {
         int must_number_width = 3;
         int must_number_height = 3;
         ArrayList<String> must_height_width = new ArrayList<>(Arrays.asList( "1", "a", "7", "2", "b", "8", "3", "c", "9" ));
-        System.out.println(ctd.getNumber_width());
-        System.out.println(ctd.getNumber_height());
-        System.out.println(ctd.getHeight_width() );
         assertEquals(true , ctd.getNumber_width() == must_number_width && ctd.getNumber_height() == must_number_height && ctd.getHeight_width().equals(must_height_width)     );
     }
 }

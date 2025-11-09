@@ -61,7 +61,6 @@ public class Converting_Tabular_Data {
             this.height_width = height_width;
             this.number_height = number_height;
             this.number_width = number_width;
-
         } catch (IOException e) {
             logger.fatal("ошибка в reading_from_excel");
             throw new RuntimeException(e);
