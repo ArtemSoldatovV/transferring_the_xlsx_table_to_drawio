@@ -34,7 +34,7 @@ public class Scenario3 {
     }
 
     @Test
-    public void Scenario_1() throws IOException, InterruptedException {
+    public void Scenario_3() throws IOException, InterruptedException {
         String path_to_the_program = System.getProperty("user.dir");
         String path_to_the_test = "src\\test\\files";
         String path_to_test_draw = (path_to_the_program + "\\" + path_to_the_test + "\\" + "test.drawio").replace("\\", "\\\\");

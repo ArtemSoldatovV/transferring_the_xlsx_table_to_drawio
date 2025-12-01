@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>diploma</artifactId>
+    <artifactId>transferring_the_xlsx_table_to_drawio</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -46,16 +46,10 @@
         </dependency>
 <!---->
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.opentest4j/opentest4j &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.opentest4j</groupId>-->
-<!--            <artifactId>opentest4j</artifactId>-->
-<!--            <version>1.2.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.20.0</version> <!-- замените на актуальную версию -->
+            <version>2.20.0</version>
         </dependency>
 
             <!-- Другие зависимости -->

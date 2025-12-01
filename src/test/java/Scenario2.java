@@ -34,7 +34,7 @@ public class Scenario2 {
     }
 
     @Test
-    public void Scenario_1() throws IOException, InterruptedException {
+    public void Scenario_2() throws IOException, InterruptedException {
 
         String path_to_the_program = System.getProperty("user.dir");
         String path_to_the_test = "src\\test\\files";

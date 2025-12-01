@@ -85,20 +85,20 @@ public class Creating_Table {
         String indent1 = "        ";
         String basis_of_the_string ="";
         if (choice == 1){
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fontSize=16;\" parent=\"1\" vertex=\"1\">";
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + " parent=\"1\" style=\"shape=table;html=1;whiteSpace=wrap;startSize=0;container=1;collapsible=0;childLayout=tableLayout;columnLines=0;rowLines=0;fontSize=16;strokeColor=default;\" value=\"\" vertex=\"1\">";
 
         }else if(choice == 2){
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=table;html=1;whiteSpace=wrap;startSize=0;container=1;collapsible=0;childLayout=tableLayout;columnLines=0;rowLines=0;fontSize=16;strokeColor=default;\" vertex=\"1\" parent=\"1\">";
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + " parent=\"1\" style=\"shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeColor=default;fontSize=16;\" value=\"Table\" vertex=\"1\">";
 
         }else if(choice == 3){
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=table;html=1;whiteSpace=wrap;startSize=0;container=1;collapsible=0;childLayout=tableLayout;columnLines=0;rowLines=0;fontSize=16;strokeColor=default;\" vertex=\"1\" parent=\"1\">";
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + " parent=\"1\" style=\"childLayout=tableLayout;recursiveResize=0;shadow=0;fillColor=none;strokeColor=#C0C0C0;\" value=\"\" vertex=\"1\">";
 
         }else if(choice == 4){
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"childLayout=tableLayout;recursiveResize=0;shadow=0;fillColor=none;strokeColor=#C0C0C0;\" vertex=\"1\" parent=\"1\">";
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + " parent=\"1\" style=\"childLayout=tableLayout;recursiveResize=0;shadow=0;fillColor=none;\" value=\"\" vertex=\"1\">";
         }else if(choice == 5){
             basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"childLayout=tableLayout;recursiveResize=0;shadow=0;fillColor=none;\" vertex=\"1\" parent=\"1\">";
         }else {
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fontSize=16;\" parent=\"1\" vertex=\"1\">";
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + " parent=\"1\" style=\"childLayout=tableLayout;recursiveResize=0;shadow=0;fillColor=none;\" value=\"\" vertex=\"1\">";
         }
         return basis_of_the_string;
     }
@@ -106,22 +106,22 @@ public class Creating_Table {
         String indent1 = "        ";
         String basis_of_the_string ="";
         if (choice == 1){
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;\" parent=\"" + id +"-1\" vertex=\"1\">" ;
-
-        }else if(choice == 2){
             basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;strokeColor=inherit;\" vertex=\"1\" parent=\"" + id +"-1\">" ;
 
-        }else if(choice == 3){
+        }else if(choice == 2){
             basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;\" vertex=\"1\" parent=\"" + id +"-1\">" ;
 
-        }else if(choice == 4){
+        }else if(choice == 3){
             basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;dropTarget=0;collapsible=0;recursiveResize=0;expand=0;fontStyle=0;fillColor=none;\" vertex=\"1\" parent=\"" + id +"-1\">" ;
+
+        }else if(choice == 4){
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;dropTarget=0;collapsible=0;recursiveResize=0;expand=0;fontStyle=0;fillColor=none;strokeColor=inherit;\" vertex=\"1\" parent=\"" + id +"-1\">" ;
 
         }else if(choice == 5){
             basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;dropTarget=0;collapsible=0;recursiveResize=0;expand=0;fontStyle=0;fillColor=none;strokeColor=inherit;\" vertex=\"1\" parent=\"" + id +"-1\">" ;
 
         }else{
-            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;\" parent=\"" + id +"-1\" vertex=\"1\">" ;
+            basis_of_the_string = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"\" style=\"shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;dropTarget=0;collapsible=0;recursiveResize=0;expand=0;fontStyle=0;fillColor=none;strokeColor=inherit;\" parent=\"" + id +"-1\" vertex=\"1\">" ;
 
         }
         return basis_of_the_string;
@@ -130,20 +130,20 @@ public class Creating_Table {
         String indent1 = "        ";
         String base_of_the_cell = "";
         if (choice == 1){
-            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;\" parent=\"" + id + "-" + number_of_width + "\" vertex=\"1\">";
+            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontSize=12;strokeColor=inherit;\" parent=\"" + id + "-" + number_of_width + "\" vertex=\"1\">";
         } else if(choice == 2){
-            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontSize=12;strokeColor=inherit;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
-        }else if(choice == 3){
             base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
+        }else if(choice == 3){
+            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"connectable=0;recursiveResize=0;strokeColor=none;fillColor=none;align=center;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
 
         }else if(choice == 4){
             base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"connectable=0;recursiveResize=0;strokeColor=none;fillColor=none;align=center;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
 
         }else if(choice == 5){
-            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\"  style=\"connectable=0;recursiveResize=0;strokeColor=inherit;fillColor=none;align=center;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
+            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"connectable=0;recursiveResize=0;strokeColor=inherit;fillColor=none;align=center;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"" + id + "-" + number_of_width + "\">";
 
         }else {
-            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;\" parent=\"" + id + "-" + number_of_width + "\" vertex=\"1\">";
+            base_of_the_cell = "\n" + indent1 + "<mxCell id=\"" + id + "-" + item_number + "\" value=\"" + cell_value + "\" style=\"connectable=0;recursiveResize=0;strokeColor=inherit;fillColor=none;align=center;whiteSpace=wrap;html=1;\" parent=\"" + id + "-" + number_of_width + "\" vertex=\"1\">";
         }
         return base_of_the_cell;
     }

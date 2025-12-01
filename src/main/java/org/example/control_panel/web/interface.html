@@ -7,52 +7,60 @@
         .style_div{
             outline: 2px solid #000;
         }
+        .button1{
+            background-color: #DEFAC6;
+        }
         .box1 {
+            margin: 0 auto;
             width: 410px;
             padding: 10px;
-            margin-bottom: 10px;
         }
         .box2 {
             padding: 10px;
             margin-top: 10px;
             margin-bottom: 5px;
         }
+        .box3 {
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
 <!--обязательные -->
 <div class="box1 style_div">
-    <input type="text" id="path_draw" name="path_draw" placeholder="путь до файла draw"  />
-    <div></div>
-    <input type="text" id="style" name="style" placeholder="стиль от 1 до 5" value="1" /><div>стиль от 1 до 5. по умолчанию 1</div>
+    <div class="box3 style_div">
+        <input type="text" id="path_draw" name="path_draw" placeholder="путь до файла draw"  />
+        <div></div>
+        <input type="text" id="style" name="style" placeholder="стиль от 1 до 5" value="1" /><div>стиль от 1 до 5. по умолчанию 1</div>
 
-    <div>
         <div>
-            <input type="text" id="table_in_the_text" name="table_in_the_text" placeholder="текст таблицы" />
-            <button id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
-        </div>
-        или
-        <div>
-            <input type="text" id="path_excel" name="path_excel" placeholder="путь до файла excel" />
-            <button id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
-
-            <input type="text" id="excel_sheet" name="excel_sheet" placeholder="название листа" value="" /><div></div>
-            <div class="box2 style_div">инструкция по вводу данных:<br>
-                области таблицы обозначается таким шаблоном СтолбецСтрока:СтолбецСтрока пример: F1:H6
+            <div>
+                <button class="button1" id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
+                <input type="text" id="table_in_the_text" name="table_in_the_text" placeholder="текст таблицы" />
             </div>
-            <input type="text" id="coordinates_of_the_selected_table" name="coordinates_of_the_selected_table" placeholder="области таблицы" value="" /><div></div>
+            или
+            <div>
+                <button class="button1" id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
+                <input type="text" id="path_excel" name="path_excel" placeholder="путь до файла excel" />
+
+                <input type="text" id="excel_sheet" name="excel_sheet" placeholder="название листа" value="" /><div></div>
+                <div class="box2 style_div">инструкция по вводу данных:<br>
+                    области таблицы обозначается таким шаблоном СтолбецСтрока:СтолбецСтрока пример: F1:H6
+                </div>
+                <input type="text" id="coordinates_of_the_selected_table" name="coordinates_of_the_selected_table" placeholder="области таблицы" value="" /><div></div>
+            </div>
         </div>
     </div>
-</div>
-<!--дополнительное -->
-<div>
-    <div>размер ячеек</div>
-    <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" /><div>высота ячеек. по умолчанию 40</div>
-    <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" /><div>ширина ячеек. по умолчанию 60</div>
-    <br>
-    <div>местоположение таблицы</div>
-    <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
-    <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
+    <!--дополнительное -->
+    <div class="box3">
+        <div>размер ячеек</div>
+        <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" /><div>высота ячеек. по умолчанию 40</div>
+        <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" /><div>ширина ячеек. по умолчанию 60</div>
+        <br>
+        <div>местоположение таблицы</div>
+        <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
+        <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
+    </div>
 </div>
 
 <script>

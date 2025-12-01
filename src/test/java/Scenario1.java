@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static java.lang.Thread.sleep;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
