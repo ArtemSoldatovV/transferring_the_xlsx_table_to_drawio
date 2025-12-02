@@ -73,14 +73,14 @@ public class SimpleHttpServer {
                     Matcher path_draw = Pattern.compile("\"path_draw\":? ?\"(.*.drawio)\"").matcher(requestBody);
                     Matcher matcher_style = Pattern.compile("\"style\":? ?([0-9]*),?").matcher(requestBody);
 
-                    Matcher table_in_the_text = Pattern.compile("\"table_in_the_text\":? ?\"([0-9a-zA-Zа-яА-Я\\\\t ]*)\",").matcher(requestBody);
+                    Matcher table_in_the_text = Pattern.compile("\"table_in_the_text\":? ?\"(.*)\",").matcher(requestBody);
 
                     Matcher path_excel = Pattern.compile("\"path_excel\":? ?\"(.*.xlsx)\"").matcher(requestBody);
                     Matcher excel_sheet = Pattern.compile("\"excel_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
                     Matcher coordinates_of_the_selected_table = Pattern.compile("\"coordinates_of_the_selected_table\":? ?\"([a-zA-Z]*[0-9]*:[a-zA-Z]*[0-9]*)\",?").matcher(requestBody);
                     //проверка данных
                     Pattern check_path = Pattern.compile("([A-Z]:[\\\\a-zA-Zа-яА-Я0-9 ]*[a-zA-Zа-яА-Я0-9 ]\\.[a-zA-Z0-9]*)");
-                    Pattern check_table_text = Pattern.compile("([\\wа-яА-я]*\\\\t|[\\wа-яА-я][^ ]* |\\w[^ ]$)*");
+                    Pattern check_table_text = Pattern.compile("([\\w\\Wа-яА-я]*\\\\t|[\\w\\Wа-яА-я][^ ]* |[\\w\\Wа-яА-я][^ ]*$)*");
 
                     //эти переменные нужны для нормальной работы проверки верности входных данных, логика на примую через .find() работает не каректно
                     boolean boolean_path_draw = path_draw.find();
