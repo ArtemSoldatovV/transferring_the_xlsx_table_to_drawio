@@ -70,32 +70,32 @@ public class SimpleHttpServer {
                     Matcher matcher_x = Pattern.compile("\"x\":? ?([0-9]*),?").matcher(requestBody);
                     Matcher matcher_y = Pattern.compile("\"y\":? ?([0-9]*),?").matcher(requestBody);
 
-                    Matcher path_draw = Pattern.compile("\"path_draw\":? ?\"(.*.drawio)\"").matcher(requestBody);
+                    Matcher name_of_the_draw_file = Pattern.compile("\"name_of_the_draw_file\":? ?\"(.*.drawio)\"").matcher(requestBody);
                     Matcher matcher_style = Pattern.compile("\"style\":? ?([0-9]*),?").matcher(requestBody);
 
-                    Matcher table_in_the_text = Pattern.compile("\"table_in_the_text\":? ?\"(.*)\",").matcher(requestBody);
+                    Matcher text_tabel = Pattern.compile("\"text_tabel\":? ?\"(.*)\",").matcher(requestBody);
 
-                    Matcher path_excel = Pattern.compile("\"path_excel\":? ?\"(.*.xlsx)\"").matcher(requestBody);
-                    Matcher excel_sheet = Pattern.compile("\"excel_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
+                    Matcher name_of_the_excel_file = Pattern.compile("\"name_of_the_excel_file\":? ?\"(.*.xlsx)\"").matcher(requestBody);
+                    Matcher name_sheet = Pattern.compile("\"name_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
                     Matcher coordinates_of_the_selected_table = Pattern.compile("\"coordinates_of_the_selected_table\":? ?\"([a-zA-Z]*[0-9]*:[a-zA-Z]*[0-9]*)\",?").matcher(requestBody);
                     //проверка данных
                     Pattern check_path = Pattern.compile("([A-Z]:[\\\\a-zA-Zа-яА-Я0-9 ]*[a-zA-Zа-яА-Я0-9 ]\\.[a-zA-Z0-9]*)");
                     Pattern check_table_text = Pattern.compile("([\\w\\Wа-яА-я]*\\\\t|[\\w\\Wа-яА-я][^ ]* |[\\w\\Wа-яА-я][^ ]*$)*");
 
                     //эти переменные нужны для нормальной работы проверки верности входных данных, логика на примую через .find() работает не каректно
-                    boolean boolean_path_draw = path_draw.find();
+                    boolean boolean_name_of_the_draw_file = name_of_the_draw_file.find();
                     boolean boolean_matcher_style = matcher_style.find();
-                    boolean boolean_table_in_the_text = table_in_the_text.find();
-                    boolean boolean_path_excel = path_excel.find();
-                    boolean boolean_excel_sheet = excel_sheet.find();
+                    boolean boolean_text_tabel = text_tabel.find();
+                    boolean boolean_name_of_the_excel_file = name_of_the_excel_file.find();
+                    boolean boolean_name_sheet = name_sheet.find();
 
 
                     //group может вернуть String или IllegalStateException, что приводит к ошибками
-                    String String_path_draw = "";
+                    String String_name_of_the_draw_file = "";
                     try {
-                        String_path_draw = path_draw.group(1);
+                        String_name_of_the_draw_file = name_of_the_draw_file.group(1);
                     } catch (IllegalStateException e) {
-                        String_path_draw = "";
+                        String_name_of_the_draw_file = "";
                     }
                     String String_matcher_style = matcher_style.group(1);
                     try {
@@ -103,23 +103,23 @@ public class SimpleHttpServer {
                     } catch (IllegalStateException e) {
                         String_matcher_style = "";
                     }
-                    String String_table_in_the_text = "";
+                    String String_text_tabel = "";
                     try {
-                        String_table_in_the_text = table_in_the_text.group(1);
+                        String_text_tabel = text_tabel.group(1);
                     } catch (IllegalStateException e) {
-                        String_table_in_the_text = "";
+                        String_text_tabel = "";
                     }
-                    String String_path_excel = "";
+                    String String_name_of_the_excel_file = "";
                     try {
-                        String_path_excel = path_excel.group(1);
+                        String_name_of_the_excel_file = name_of_the_excel_file.group(1);
                     } catch (IllegalStateException e) {
-                        String_path_excel = "";
+                        String_name_of_the_excel_file = "";
                     }
-                    String String_excel_sheet = "";
+                    String String_name_sheet = "";
                     try {
-                        String_excel_sheet = excel_sheet.group(1);
+                        String_name_sheet = name_sheet.group(1);
                     } catch (IllegalStateException e) {
-                        String_excel_sheet = "";
+                        String_name_sheet = "";
                     }
 
                     String String_coordinates_of_the_selected_table = "";
@@ -159,29 +159,29 @@ public class SimpleHttpServer {
                         String_y = "0";
                     }
 
-                    Boolean check_darw_path = check_path.matcher(String_path_draw).matches();
+                    Boolean check_darw_path = check_path.matcher(String_name_of_the_draw_file).matches();
 
                     if (!check_darw_path) {
                         logger.error("Ошибка: путь до файлв .drawio имеет невозможные символы");
                     } else {
                         //основное тело программы
-                        if (boolean_table_in_the_text) {
-                            if (!check_table_text.matcher(String_table_in_the_text).matches()) {
+                        if (boolean_text_tabel) {
+                            if (!check_table_text.matcher(String_text_tabel).matches()) {
                                 throw new IllegalArgumentException("Ошибка: текст таблицы неправильный или повреждённый");
                             } else {
-                                String text = c_t_d.JSON_to_normal_string(String_table_in_the_text);
-                                m_c.work(String_path_draw, text, Integer.parseInt(String_matcher_style)
+                                String text = c_t_d.JSON_to_normal_string(String_text_tabel);
+                                m_c.work(String_name_of_the_draw_file, text, Integer.parseInt(String_matcher_style)
                                         , Integer.parseInt(String_height), Integer.parseInt(String_width)
                                         , Integer.parseInt(String_x), Integer.parseInt(String_y));
                             }
                         } else {
-                            if (!check_path.matcher(String_path_excel).matches()) {
+                            if (!check_path.matcher(String_name_of_the_excel_file).matches()) {
                                 throw new IllegalArgumentException("Ошибка: путь до файлв .xlsx имеет невозможные символы");
                             } else {
-                                m_c.work(String_path_draw, Integer.parseInt(String_matcher_style)
+                                m_c.work(String_name_of_the_draw_file, Integer.parseInt(String_matcher_style)
                                         , Integer.parseInt(String_height), Integer.parseInt(String_width)
                                         , Integer.parseInt(String_x), Integer.parseInt(String_y)
-                                        , String_path_excel, String_excel_sheet
+                                        , String_name_of_the_excel_file, String_name_sheet
                                         , String_coordinates_of_the_selected_table
                                 );
                             }

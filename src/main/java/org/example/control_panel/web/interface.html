@@ -29,21 +29,21 @@
 <!--обязательные -->
 <div class="box1 style_div">
     <div class="box3 style_div">
-        <input type="text" id="path_draw" name="path_draw" placeholder="путь до файла draw"  />
+        <input type="text" id="name_of_the_draw_file" name="name_of_the_draw_file" placeholder="путь до файла draw"  />
         <div></div>
         <input type="text" id="style" name="style" placeholder="стиль от 1 до 5" value="1" /><div>стиль от 1 до 5. по умолчанию 1</div>
 
         <div>
             <div>
                 <button class="button1" id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
-                <input type="text" id="table_in_the_text" name="table_in_the_text" placeholder="текст таблицы" />
+                <input type="text" id="text_tabel" name="text_tabel" placeholder="текст таблицы" />
             </div>
             или
             <div>
                 <button class="button1" id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
-                <input type="text" id="path_excel" name="path_excel" placeholder="путь до файла excel" />
+                <input type="text" id="name_of_the_excel_file" name="name_of_the_excel_file" placeholder="путь до файла excel" />
 
-                <input type="text" id="excel_sheet" name="excel_sheet" placeholder="название листа" value="" /><div></div>
+                <input type="text" id="name_sheet" name="name_sheet" placeholder="название листа" value="" /><div></div>
                 <div class="box2 style_div">инструкция по вводу данных:<br>
                     области таблицы обозначается таким шаблоном СтолбецСтрока:СтолбецСтрока пример: F1:H6
                 </div>
@@ -64,44 +64,44 @@
 </div>
 
 <script>
-    function send_the_table_in_text(path_draw, table_in_the_text, style) {
+    function send_the_table_in_text(name_of_the_draw_file, text_tabel, style) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, table_in_the_text, style })
+            body: JSON.stringify({ name_of_the_draw_file, text_tabel, style })
         })
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table) {
+    function send_the_table_in_path(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table })
+            body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table })
         })
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_text_augmented(path_draw, table_in_the_text, height, width, x, y, style) {
+    function send_the_table_in_text_augmented(name_of_the_draw_file, text_tabel, height, width, x, y, style) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, table_in_the_text, height, width, x, y, style })
+            body: JSON.stringify({ name_of_the_draw_file, text_tabel, height, width, x, y, style })
         })
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y) {
+    function send_the_table_in_path_augmented(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y})
+            body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y})
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -119,22 +119,22 @@
         const y = Number(document.getElementById('y').value);
         const x = Number(document.getElementById('x').value);
 
-        const path_draw = document.getElementById('path_draw').value;
+        const name_of_the_draw_file = document.getElementById('name_of_the_draw_file').value;
         const style = Number(document.getElementById('style').value);
-        const path_excel = document.getElementById('path_excel').value;
-        const excel_sheet = document.getElementById('excel_sheet').value;
+        const name_of_the_excel_file = document.getElementById('name_of_the_excel_file').value;
+        const name_sheet = document.getElementById('name_sheet').value;
         const coordinates_of_the_selected_table = document.getElementById('coordinates_of_the_selected_table').value;
 
         if (style > 5 || style < 1){
             style = Number(1);
         }
 
-        if (path_excel === "" || path_draw === "" || isNaN(style)) {
+        if (name_of_the_excel_file === "" || name_of_the_draw_file === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
-            send_the_table_in_path(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table)
+            send_the_table_in_path(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table)
         }else{
-            send_the_table_in_path_augmented(path_draw, path_excel, style, excel_sheet, coordinates_of_the_selected_table, height, width, x, y)
+            send_the_table_in_path_augmented(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y)
         }
 
 
@@ -150,20 +150,20 @@
         const y = Number(document.getElementById('y').value);
         const x = Number(document.getElementById('x').value);
 
-        const path_draw = document.getElementById('path_draw').value;
+        const name_of_the_draw_file = document.getElementById('name_of_the_draw_file').value;
         const style = Number(document.getElementById('style').value);
-        const table_in_the_text = document.getElementById('table_in_the_text').value;
+        const text_tabel = document.getElementById('text_tabel').value;
 
         if (style > 5 || style < 1){
             style = Number(1);
         }
 
-        if (table_in_the_text === "" || path_draw === "" || isNaN(style)) {
+        if (text_tabel === "" || name_of_the_draw_file === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
-            send_the_table_in_text(path_draw, table_in_the_text, style)
+            send_the_table_in_text(name_of_the_draw_file, text_tabel, style)
         }else{
-            send_the_table_in_text_augmented(path_draw, table_in_the_text, height, width, x, y, style)
+            send_the_table_in_text_augmented(name_of_the_draw_file, text_tabel, height, width, x, y, style)
         }
 
     })
