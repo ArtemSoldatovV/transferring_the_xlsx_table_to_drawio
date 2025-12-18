@@ -36,7 +36,7 @@
         <div>
             <div>
                 <button class="button1" id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
-                <input type="text" id="text_tabel" name="text_tabel" placeholder="текст таблицы" />
+                <input type="text" id="text_table" name="text_table" placeholder="текст таблицы" />
             </div>
             или
             <div>
@@ -64,11 +64,11 @@
 </div>
 
 <script>
-    function send_the_table_in_text(name_of_the_draw_file, text_tabel, style) {
+    function send_the_table_in_text(name_of_the_draw_file, text_table, style) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, text_tabel, style })
+            body: JSON.stringify({ name_of_the_draw_file, text_table, style })
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -86,11 +86,11 @@
         .catch(error => console.error("Ошибка при отправке:", error));
     }
 
-    function send_the_table_in_text_augmented(name_of_the_draw_file, text_tabel, height, width, x, y, style) {
+    function send_the_table_in_text_augmented(name_of_the_draw_file, text_table, height, width, x, y, style) {
         fetch('http://localhost:8080/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, text_tabel, height, width, x, y, style })
+            body: JSON.stringify({ name_of_the_draw_file, text_table, height, width, x, y, style })
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -107,6 +107,7 @@
         .then(data => console.log(data))
         .catch(error => console.error("Ошибка при отправке:", error));
     }
+
 
     const PT = document.getElementById('sendingThePathToTheTable');
     const TT = document.getElementById('sendTheTabletText');
@@ -152,18 +153,18 @@
 
         const name_of_the_draw_file = document.getElementById('name_of_the_draw_file').value;
         const style = Number(document.getElementById('style').value);
-        const text_tabel = document.getElementById('text_tabel').value;
+        const text_table = document.getElementById('text_table').value;
 
         if (style > 5 || style < 1){
             style = Number(1);
         }
 
-        if (text_tabel === "" || name_of_the_draw_file === "" || isNaN(style)) {
+        if (text_table === "" || name_of_the_draw_file === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
-            send_the_table_in_text(name_of_the_draw_file, text_tabel, style)
+            send_the_table_in_text(name_of_the_draw_file, text_table, style)
         }else{
-            send_the_table_in_text_augmented(name_of_the_draw_file, text_tabel, height, width, x, y, style)
+            send_the_table_in_text_augmented(name_of_the_draw_file, text_table, height, width, x, y, style)
         }
 
     })

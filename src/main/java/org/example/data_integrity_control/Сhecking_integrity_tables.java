@@ -20,7 +20,7 @@ public class Сhecking_integrity_tables {
         return exit;
     }
 
-    public boolean chek_tabel(String table){
+    public boolean chek_table(String table){
         boolean y_n = true;
 
         String indent1 = "        ";

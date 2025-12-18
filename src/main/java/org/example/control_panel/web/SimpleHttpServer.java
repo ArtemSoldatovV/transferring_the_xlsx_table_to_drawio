@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.Converting_Tabular_Data;
 import org.example.Main_Creating;
+import org.example.error_handling.Error_output_to_user;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -73,7 +74,7 @@ public class SimpleHttpServer {
                     Matcher name_of_the_draw_file = Pattern.compile("\"name_of_the_draw_file\":? ?\"(.*.drawio)\"").matcher(requestBody);
                     Matcher matcher_style = Pattern.compile("\"style\":? ?([0-9]*),?").matcher(requestBody);
 
-                    Matcher text_tabel = Pattern.compile("\"text_tabel\":? ?\"(.*)\",").matcher(requestBody);
+                    Matcher text_table = Pattern.compile("\"text_table\":? ?\"(.*)\",").matcher(requestBody);
 
                     Matcher name_of_the_excel_file = Pattern.compile("\"name_of_the_excel_file\":? ?\"(.*.xlsx)\"").matcher(requestBody);
                     Matcher name_sheet = Pattern.compile("\"name_sheet\":? ?\"([0-9a-zA-Zа-яА-Я]*)\",?").matcher(requestBody);
@@ -85,7 +86,7 @@ public class SimpleHttpServer {
                     //эти переменные нужны для нормальной работы проверки верности входных данных, логика на примую через .find() работает не каректно
                     boolean boolean_name_of_the_draw_file = name_of_the_draw_file.find();
                     boolean boolean_matcher_style = matcher_style.find();
-                    boolean boolean_text_tabel = text_tabel.find();
+                    boolean boolean_text_table  = text_table.find();
                     boolean boolean_name_of_the_excel_file = name_of_the_excel_file.find();
                     boolean boolean_name_sheet = name_sheet.find();
 
@@ -103,11 +104,11 @@ public class SimpleHttpServer {
                     } catch (IllegalStateException e) {
                         String_matcher_style = "";
                     }
-                    String String_text_tabel = "";
+                    String String_text_table  = "";
                     try {
-                        String_text_tabel = text_tabel.group(1);
+                        String_text_table  = text_table .group(1);
                     } catch (IllegalStateException e) {
-                        String_text_tabel = "";
+                        String_text_table  = "";
                     }
                     String String_name_of_the_excel_file = "";
                     try {
@@ -165,11 +166,11 @@ public class SimpleHttpServer {
                         logger.error("Ошибка: путь до файлв .drawio имеет невозможные символы");
                     } else {
                         //основное тело программы
-                        if (boolean_text_tabel) {
-                            if (!check_table_text.matcher(String_text_tabel).matches()) {
+                        if (boolean_text_table ) {
+                            if (!check_table_text.matcher(String_text_table ).matches()) {
                                 throw new IllegalArgumentException("Ошибка: текст таблицы неправильный или повреждённый");
                             } else {
-                                String text = c_t_d.JSON_to_normal_string(String_text_tabel);
+                                String text = c_t_d.JSON_to_normal_string(String_text_table );
                                 m_c.work(String_name_of_the_draw_file, text, Integer.parseInt(String_matcher_style)
                                         , Integer.parseInt(String_height), Integer.parseInt(String_width)
                                         , Integer.parseInt(String_x), Integer.parseInt(String_y));
