@@ -58,13 +58,7 @@ public class SimpleHttpServer {
                     String requestBody = new String(exchange.getRequestBody().readAllBytes(), "utf-8");
                     //входящие данные requestBody
                     System.out.println(requestBody);
-                    //формируем ответ
-                    String response = "{\"response\": \"подтверждение сообщение пришло\"}";
-                    exchange.getResponseHeaders().add("Content-Type", "application/json");
-                    exchange.sendResponseHeaders(200, response.getBytes().length);
-                    OutputStream os = exchange.getResponseBody();
-                    os.write(response.getBytes());
-                    os.close();
+
 
                     Matcher matcher_height = Pattern.compile("\"height\":? ?([0-9]*),?").matcher(requestBody);
                     Matcher matcher_width = Pattern.compile("\"width\":? ?([0-9]*),?").matcher(requestBody);
@@ -163,7 +157,7 @@ public class SimpleHttpServer {
                     Boolean check_darw_path = check_path.matcher(String_name_of_the_draw_file).matches();
 
                     if (!check_darw_path) {
-                        logger.error("Ошибка: путь до файлв .drawio имеет невозможные символы");
+                        logger.error("Ошибка: путь до файл .drawio имеет невозможные символы");
                     } else {
                         //основное тело программы
                         if (boolean_text_table ) {
@@ -177,7 +171,7 @@ public class SimpleHttpServer {
                             }
                         } else {
                             if (!check_path.matcher(String_name_of_the_excel_file).matches()) {
-                                throw new IllegalArgumentException("Ошибка: путь до файлв .xlsx имеет невозможные символы");
+                                throw new IllegalArgumentException("Ошибка: путь до файл .xlsx имеет невозможные символы");
                             } else {
                                 m_c.work(String_name_of_the_draw_file, Integer.parseInt(String_matcher_style)
                                         , Integer.parseInt(String_height), Integer.parseInt(String_width)
@@ -188,10 +182,41 @@ public class SimpleHttpServer {
                             }
                         }
                     }
-                }catch (IllegalArgumentException e) {
+
+                    Thread.sleep(1500);//нужен потому, что программа доходит до проверки раньше запись файла
+                    Error_output_to_user eotu = Error_output_to_user.getInstance();
+                    if (eotu.error_occurred()) {
+                        String response = "{\"error_message\": \"" + eotu.error_output() +"\"}";
+                        exchange.getResponseHeaders().add("Content-Type", "application/json");
+                        exchange.sendResponseHeaders(500, response.getBytes().length);
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
+                    }
+                    else {
+                        //формируем ответ
+                        String response = "{\"response\": \"подтверждение сообщение пришло\"}";
+                        exchange.getResponseHeaders().add("Content-Type", "application/json");
+                        exchange.sendResponseHeaders(200, response.getBytes().length);
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
+                    }
+
+                }catch (IllegalArgumentException | InterruptedException e) {
                     logger.error(e);
+
+                    String response = "{\"error_message\": \"" + e.getMessage() +"\"}";
+                    exchange.getResponseHeaders().add("Content-Type", "application/json");
+                    exchange.sendResponseHeaders(500, response.getBytes().length);
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(response.getBytes());
+                    os.close();
+
                     throw new RuntimeException(e);
                 }
+
+
 
             } else {
                 logger.error("мы вернули ответ 405");

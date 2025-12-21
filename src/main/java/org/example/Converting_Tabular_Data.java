@@ -3,6 +3,8 @@ package org.example;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
+import org.example.error_handling.Error_output_to_user;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -13,11 +15,14 @@ import java.util.regex.Pattern;
 
 public class Converting_Tabular_Data {
 
+    Error_output_to_user eotu = Error_output_to_user.getInstance();
+
     private static final Logger logger = LogManager.getLogger(Converting_Tabular_Data.class);
 
     private ArrayList<String> height_width;
     private int number_height;
     private int number_width;
+
 
     //чтение из текста
     public void reading_from_text(String table_text){
@@ -62,6 +67,8 @@ public class Converting_Tabular_Data {
             this.number_height = number_height;
             this.number_width = number_width;
         } catch (IOException e) {
+            eotu.entering_error(e.getMessage());
+
             logger.fatal("ошибка в reading_from_excel");
             throw new RuntimeException(e);
         }
@@ -72,6 +79,10 @@ public class Converting_Tabular_Data {
         try (FileInputStream fis = new FileInputStream(filePath)) {
             return WorkbookFactory.create(fis);
         }catch (IOException e) {
+
+            Error_output_to_user eotu = Error_output_to_user.getInstance();
+            eotu.entering_error(e.getMessage());
+
             logger.fatal("чтение файла привело к ошибке по пути " + filePath);
             throw new RuntimeException(e);
         }

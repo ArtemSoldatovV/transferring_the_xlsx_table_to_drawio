@@ -8,8 +8,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.error_handling.Error_output_to_user;
 
 public class Writing_to_the_drawio_file {
+
+    Error_output_to_user eotu = Error_output_to_user.getInstance();
+
     private static final Logger logger = LogManager.getLogger(Writing_to_the_drawio_file.class);
 
     public void record (String file_path_and_or_name, String the_billing_table){
@@ -18,18 +22,24 @@ public class Writing_to_the_drawio_file {
             logger.info("чтение файла .xlsx");
             String where_to_record = "<mxCell id=\"1\" parent=\"0\" />";
             Path path = Paths.get(file_path_and_or_name);//name.drawio
-            String content = new String( Files.readAllBytes(path) );
+            if (Files.exists(path) && Files.isRegularFile(path)){
+                String content = new String( Files.readAllBytes(path) );
 
-            content = content.replaceAll(where_to_record, where_to_record + the_billing_table);
+                content = content.replaceAll(where_to_record, where_to_record + the_billing_table);
 
-            //запись обратно
-            FileWriter writer = new FileWriter(file_path_and_or_name, false);
-            writer.write(content);
-            writer.flush();
+                //запись обратно
+                FileWriter writer = new FileWriter(file_path_and_or_name, false);
+                writer.write(content);
+                writer.flush();
+            }
+            else {
+                throw new IOException();
+            }
 
         } catch (IOException e) {
-            logger.fatal("чтение файла привело к ошибке по пути " + the_billing_table);
-            e.printStackTrace();
+            eotu.entering_error("чтение файла привело к ошибке по пути " + file_path_and_or_name);
+            logger.fatal("чтение файла привело к ошибке по пути " + file_path_and_or_name);
+            //e.printStackTrace();
         }
     }
 }

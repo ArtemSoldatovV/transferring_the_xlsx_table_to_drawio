@@ -3,9 +3,15 @@ package org.example;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.data_integrity_control.Сhecking_integrity_tables;
+import org.example.error_handling.Error_output_to_user;
 import org.example.excel_positions.Translating_Excel_Position;
 
+import java.io.IOException;
+
 public class Main_Creating {
+
+    Error_output_to_user eotu = Error_output_to_user.getInstance();
+
     private static final Logger logger = LogManager.getLogger(Main_Creating.class);
     public void work(String name_of_the_draw_file, String text_table, int style, int height, int width, int x, int y){
         try{
@@ -17,11 +23,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             }else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }
@@ -40,11 +49,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style, x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             }else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }
@@ -62,11 +74,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width() , style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             }else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }
@@ -84,11 +99,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             }else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }
@@ -108,11 +126,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width() , style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             }else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }
@@ -134,11 +155,14 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style, x, y, c_tabulalr_data.getNumber_height(), c_tabulalr_data.getNumber_width(), height, width);
             if (c_i_t.chek_table(text)) {
                 writing.record(name_of_the_draw_file, text);
-                logger.info("таблица загружена в файл");
+                if (eotu.error_occurred()) {
+                    logger.info("таблица загружена в файл");
+                }
             } else {
                 throw new IllegalArgumentException("Ошибка: таблица построена не верно");
             }
         }catch (IllegalArgumentException e) {
+            eotu.entering_error(e.getMessage());
             logger.error(e);
             throw new RuntimeException(e);
         }

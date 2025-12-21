@@ -61,51 +61,173 @@
         <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
         <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
     </div>
+    <div id="error-message" style="color: red; display: none;"></div>
 </div>
 
 <script>
-    function send_the_table_in_text(name_of_the_draw_file, text_table, style) {
-        fetch('http://localhost:8080/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, text_table, style })
+    function send_the_table_in_text(name_of_the_draw_file, text_table, style, timeout = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchPromise = fetch('http://localhost:8080/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name_of_the_draw_file, text_table, style }),
+        signal: signal
+    });
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    fetchPromise
+        .then(response => {
+            clearTimeout(timeoutId);
+            return response.json();
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error("Ошибка при отправке:", error));
+        .then(data => {
+            const errorDiv = document.getElementById('error-message');
+            if (data.error_message) {
+                errorDiv.innerText = data.error_message;
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+                console.log("Успешно:", data);
+            }
+        })
+        .catch(error => {
+            const errorDiv = document.getElementById('error-message');
+            if (error.name === 'AbortError') {
+                errorDiv.innerText = "Запрос превысил лимит времени и был отменён";
+            } else {
+                errorDiv.innerText = "Произошла ошибка: " + error.message;
+            }
+            errorDiv.style.display = 'block';
+        });
     }
 
-    function send_the_table_in_path(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table) {
-        fetch('http://localhost:8080/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table })
+    function send_the_table_in_path(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, timeout = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchPromise = fetch('http://localhost:8080/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table }),
+        signal: signal
+    });
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    fetchPromise
+        .then(response => {
+            clearTimeout(timeoutId);
+            return response.json();
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error("Ошибка при отправке:", error));
+        .then(data => {
+            const errorDiv = document.getElementById('error-message');
+            if (data.error_message) {
+                errorDiv.innerText = data.error_message;
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+                console.log("Успешно:", data);
+            }
+        })
+        .catch(error => {
+            const errorDiv = document.getElementById('error-message');
+            if (error.name === 'AbortError') {
+                errorDiv.innerText = "Запрос превысил лимит времени и был отменён";
+            } else {
+                errorDiv.innerText = "Произошла ошибка: " + error.message;
+            }
+            errorDiv.style.display = 'block';
+        });
     }
 
-    function send_the_table_in_text_augmented(name_of_the_draw_file, text_table, height, width, x, y, style) {
-        fetch('http://localhost:8080/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, text_table, height, width, x, y, style })
+    function send_the_table_in_text_augmented(name_of_the_draw_file, text_table, height, width, x, y, style, timeout = 5000){
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchPromise = fetch('http://localhost:8080/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name_of_the_draw_file, text_table, height, width, x, y, style }),
+        signal: signal
+    });
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    fetchPromise
+        .then(response => {
+            clearTimeout(timeoutId);
+            return response.json();
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error("Ошибка при отправке:", error));
+        .then(data => {
+            // Проверка, есть ли в ответе сообщение об ошибке
+            const errorDiv = document.getElementById('error-message');
+            if (data.error_message) {
+                errorDiv.innerText = data.error_message;
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+                console.log("Успешно:", data);
+            }
+        })
+        .catch(error => {
+            const errorDiv = document.getElementById('error-message');
+            if (error.name === 'AbortError') {
+                errorDiv.innerText = "Запрос превысил лимит времени и был отменён";
+            } else {
+                errorDiv.innerText = "Произошла ошибка: " + error.message;
+            }
+            errorDiv.style.display = 'block';
+        });
     }
 
-    function send_the_table_in_path_augmented(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y) {
-        fetch('http://localhost:8080/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y})
+    function send_the_table_in_path_augmented(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y, timeout = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchPromise = fetch('http://localhost:8080/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y }),
+        signal: signal
+    });
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    fetchPromise
+        .then(response => {
+            clearTimeout(timeoutId);
+            return response.json();
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error("Ошибка при отправке:", error));
+        .then(data => {
+            const errorDiv = document.getElementById('error-message');
+            if (data.error_message) {
+                errorDiv.innerText = data.error_message;
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+                console.log("Успешно:", data);
+            }
+        })
+        .catch(error => {
+            const errorDiv = document.getElementById('error-message');
+            if (error.name === 'AbortError') {
+                errorDiv.innerText = "Запрос превысил лимит времени и был отменён";
+            } else {
+                errorDiv.innerText = "Произошла ошибка: " + error.message;
+            }
+            errorDiv.style.display = 'block';
+        });
     }
 
 
@@ -130,11 +252,17 @@
             style = Number(1);
         }
 
+
+        const errorDiv = document.getElementById('error-message');
         if (name_of_the_excel_file === "" || name_of_the_draw_file === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
+            errorDiv.innerText = "Ошибка: не все данные введены";
+            errorDiv.style.display = 'block';
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
+            errorDiv.style.display = 'none';
             send_the_table_in_path(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table)
         }else{
+            errorDiv.style.display = 'none';
             send_the_table_in_path_augmented(name_of_the_draw_file, name_of_the_excel_file, style, name_sheet, coordinates_of_the_selected_table, height, width, x, y)
         }
 
@@ -158,12 +286,16 @@
         if (style > 5 || style < 1){
             style = Number(1);
         }
-
+        const errorDiv = document.getElementById('error-message');
         if (text_table === "" || name_of_the_draw_file === "" || isNaN(style)) {
             console.error('Ошибка: не все данные введены');
+            errorDiv.innerText = "Ошибка: не все данные введены";
+            errorDiv.style.display = 'block';
         }else if (isNaN(height) || isNaN(width) || isNaN(y) || isNaN(x)){
+            errorDiv.style.display = 'none';
             send_the_table_in_text(name_of_the_draw_file, text_table, style)
         }else{
+            errorDiv.style.display = 'none';
             send_the_table_in_text_augmented(name_of_the_draw_file, text_table, height, width, x, y, style)
         }
 
