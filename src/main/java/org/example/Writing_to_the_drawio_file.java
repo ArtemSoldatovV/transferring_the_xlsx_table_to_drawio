@@ -19,10 +19,10 @@ public class Writing_to_the_drawio_file {
     public void record (String file_path_and_or_name, String the_billing_table){
         //читаем с каким файлом и работать вставляем таблицу
         try {
-            logger.info("чтение файла .xlsx");
+            logger.info("чтение файла .drawio");
             String where_to_record = "<mxCell id=\"1\" parent=\"0\" />";
             Path path = Paths.get(file_path_and_or_name);//name.drawio
-            if (Files.exists(path) && Files.isRegularFile(path)){
+            if (Files.exists(path)){
                 String content = new String( Files.readAllBytes(path) );
 
                 content = content.replaceAll(where_to_record, where_to_record + the_billing_table);

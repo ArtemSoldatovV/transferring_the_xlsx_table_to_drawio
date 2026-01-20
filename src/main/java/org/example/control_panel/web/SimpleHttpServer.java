@@ -18,13 +18,13 @@ import java.util.regex.Pattern;
 public class SimpleHttpServer {
 
     public static void main(String[] args) throws IOException {
-        // Создаем сервер, слушающий порт 8080
+        // создаем сервер, слушающий порт 8080
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        // Создаем контекст /process для обработки POST-запросов
+        // создаем контекст /process для обработки POST-запросов
         server.createContext("/process", new MyHandler());
 
-        // Запускаем сервер
+        // запускаем сервер
         server.start();
         System.out.println("Server is listening on port 8080");
     }

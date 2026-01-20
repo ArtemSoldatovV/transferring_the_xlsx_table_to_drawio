@@ -23,7 +23,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             }else {
@@ -49,7 +49,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style, x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             }else {
@@ -74,7 +74,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width() , style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             }else {
@@ -99,7 +99,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             }else {
@@ -126,7 +126,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width() , style,  x,y  ,c_tabulalr_data.getNumber_height() ,c_tabulalr_data.getNumber_width() ,  height,width);
             if (c_i_t.chek_table(text)){
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             }else {
@@ -155,7 +155,7 @@ public class Main_Creating {
             var text = c_table.create(c_tabulalr_data.getHeight_width(), style, x, y, c_tabulalr_data.getNumber_height(), c_tabulalr_data.getNumber_width(), height, width);
             if (c_i_t.chek_table(text)) {
                 writing.record(name_of_the_draw_file, text);
-                if (eotu.error_occurred()) {
+                if (!eotu.error_occurred()) {
                     logger.info("таблица загружена в файл");
                 }
             } else {
