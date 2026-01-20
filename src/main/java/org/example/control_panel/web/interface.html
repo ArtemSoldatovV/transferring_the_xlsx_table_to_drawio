@@ -4,6 +4,13 @@
     <meta charset="utf-8" />
     <title>POST запрос пример</title>
     <style>
+        input{
+            border-radius: 5px;
+        }
+        button{
+            border-radius: 5px;
+            width: 172px;
+        }
         .style_div{
             outline: 2px solid #000;
         }
@@ -12,34 +19,48 @@
         }
         .box1 {
             margin: 0 auto;
-            width: 410px;
+            width: 550px;
             padding: 10px;
+            border-radius: 15px;
         }
         .box2 {
             padding: 10px;
             margin-top: 10px;
             margin-bottom: 5px;
+            border-radius: 15px;
         }
         .box3 {
             padding: 15px;
+            border-radius: 15px;
         }
+        .box4{
+            border-radius: 15px;
+            align-items: stretch;
+            padding: 10px;
+        }
+        .box5{
+            display: flex;
+            padding-top: 5px;
+        }
+        .text1{margin: 5px;}
     </style>
 </head>
 <body>
+<!--172.8 21.2-->
 <!--обязательные -->
-<div class="box1 style_div">
+<div class="box1">
     <div class="box3 style_div">
         <input type="text" id="name_of_the_draw_file" name="name_of_the_draw_file" placeholder="путь до файла draw"  />
         <div></div>
         <input type="text" id="style" name="style" placeholder="стиль от 1 до 5" value="1" /><div>стиль от 1 до 5. по умолчанию 1</div>
 
-        <div>
-            <div>
+        <div class="box5">
+            <div class="box4 style_div">
                 <button class="button1" id="sendTheTabletText" type="button">Добавить таблицу (текст) в файл</button>
                 <input type="text" id="text_table" name="text_table" placeholder="текст таблицы" />
             </div>
-            или
-            <div>
+            <div class="text1">или</div>
+            <div class="box4 style_div">
                 <button class="button1" id="sendingThePathToTheTable" type="button">Добавить таблицу excel в файл</button>
                 <input type="text" id="name_of_the_excel_file" name="name_of_the_excel_file" placeholder="путь до файла excel" />
 
@@ -50,18 +71,18 @@
                 <input type="text" id="coordinates_of_the_selected_table" name="coordinates_of_the_selected_table" placeholder="области таблицы" value="" /><div></div>
             </div>
         </div>
+        <div class="box3">
+            <div>размер ячеек</div>
+            <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" /><div>высота ячеек. по умолчанию 40</div>
+            <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" /><div>ширина ячеек. по умолчанию 60</div>
+            <br>
+            <div>местоположение таблицы</div>
+            <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
+            <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
+        </div>
+        <div id="error-message" style="color: red; display: none;"></div>
     </div>
     <!--дополнительное -->
-    <div class="box3">
-        <div>размер ячеек</div>
-        <input type="text" id="height" name="height" placeholder="высота ячеек" value="40" /><div>высота ячеек. по умолчанию 40</div>
-        <input type="text" id="width" name="width" placeholder="ширина ячеек" value="60" /><div>ширина ячеек. по умолчанию 60</div>
-        <br>
-        <div>местоположение таблицы</div>
-        <input type="text" id="x" name="x" placeholder="позиция по x" value="0" /><div>позиция по x. по умолчанию 0</div>
-        <input type="text" id="y" name="y" placeholder="позиция по y" value="0" /><div>позиция по y. по умолчанию 0</div>
-    </div>
-    <div id="error-message" style="color: red; display: none;"></div>
 </div>
 
 <script>
