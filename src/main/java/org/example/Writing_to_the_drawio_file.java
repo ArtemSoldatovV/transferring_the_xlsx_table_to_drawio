@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.error_handling.Error_output_to_user;
@@ -20,10 +19,18 @@ public class Writing_to_the_drawio_file {
         //читаем с каким файлом и работать вставляем таблицу
         try {
             logger.info("чтение файла .drawio");
-            String where_to_record = "<mxCell id=\"1\" parent=\"0\" />";
+            String sheet = "<mxCell id=\"1\" parent=\"0\"/";
+            String empty_sheet = sheet+">";
+            String recorded_sheet = sheet + " " +"/>";
+                    //indexOf
+            String where_to_record = "";
             Path path = Paths.get(file_path_and_or_name);//name.drawio
             if (Files.exists(path)){
                 String content = new String( Files.readAllBytes(path) );
+                if (content.indexOf(empty_sheet) != -1){
+                    where_to_record = empty_sheet;}
+                else {
+                    where_to_record = recorded_sheet;}
 
                 content = content.replaceAll(where_to_record, where_to_record + the_billing_table);
 
