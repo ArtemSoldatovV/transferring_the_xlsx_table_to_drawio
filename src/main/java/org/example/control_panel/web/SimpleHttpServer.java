@@ -9,13 +9,16 @@ import org.example.Converting_Tabular_Data;
 import org.example.Main_Creating;
 import org.example.error_handling.Error_output_to_user;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.awt.Desktop;
 
 public class SimpleHttpServer {
+    private static final Logger logger = LogManager.getLogger(SimpleHttpServer.class);
 
     public static void main(String[] args) throws IOException {
         // создаем сервер, слушающий порт 8080
@@ -27,6 +30,18 @@ public class SimpleHttpServer {
         // запускаем сервер
         server.start();
         System.out.println("Server is listening on port 8080");
+
+        File htmlFile = new File("src/main/java/org/example/control_panel/web/interface.html");
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(htmlFile.toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            logger.fatal("ошибка браузер не смог открыть страницу");
+        }
     }
 
     static class MyHandler implements HttpHandler {
