@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Desktop;
@@ -31,16 +33,12 @@ public class SimpleHttpServer {
         server.start();
         System.out.println("Server is listening on port 8080");
 
-        File htmlFile = new File("src/main/java/org/example/control_panel/web/interface.html");
-        if (Desktop.isDesktopSupported()) {
+        try {
             Desktop desktop = Desktop.getDesktop();
-            try {
-                desktop.browse(htmlFile.toURI());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            logger.fatal("ошибка браузер не смог открыть страницу");
+            desktop.browse(new URI("http://localhost:63342/transferring_the_xlsx_table_to_drawio.jar/interface.html?_ijt=kcg1ms7hu6bn4t5o8n22o66gpj&_ij_reload=RELOAD_ON_SAVE"));
+        } catch (Exception e) {
+            logger.fatal(e);
+            e.printStackTrace();
         }
     }
 
@@ -58,15 +56,6 @@ public class SimpleHttpServer {
             exchange.getResponseHeaders().add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
             exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
-
-            String method = exchange.getRequestMethod();
-
-            if ("OPTIONS".equalsIgnoreCase(method)) {
-                //Pre-flight запрос, отвечаем необходимыми заголовками и пустым телом
-                exchange.sendResponseHeaders(204, -1);
-                exchange.close();
-                return;
-            }
 
             if ("POST".equals(exchange.getRequestMethod())) {
                 try {
