@@ -35,8 +35,8 @@ public class SimpleHttpServer {
 
         try {
             Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI("http://localhost:63342/transferring_the_xlsx_table_to_drawio.jar/interface.html?_ijt=kcg1ms7hu6bn4t5o8n22o66gpj&_ij_reload=RELOAD_ON_SAVE"));
-        } catch (Exception e) {
+            desktop.browse(new URI("http://localhost:63342/diploma/transferring_the_xlsx_table_to_drawio/org/example/control_panel/web/interface.html?_ijt=2ict1dbompjbbvbkrq6etf56rn&_ij_reload=RELOAD_ON_SAVE"));
+            } catch (Exception e) {
             logger.fatal(e);
             e.printStackTrace();
         }
