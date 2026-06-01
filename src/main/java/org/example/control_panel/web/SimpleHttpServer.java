@@ -9,15 +9,12 @@ import org.example.Converting_Tabular_Data;
 import org.example.Main_Creating;
 import org.example.error_handling.Error_output_to_user;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.URI;
-import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.awt.Desktop;
+
 
 public class SimpleHttpServer {
     private static final Logger logger = LogManager.getLogger(SimpleHttpServer.class);
@@ -32,14 +29,6 @@ public class SimpleHttpServer {
         // запускаем сервер
         server.start();
         System.out.println("Server is listening on port 8080");
-
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI("http://localhost:63342/diploma/transferring_the_xlsx_table_to_drawio/org/example/control_panel/web/interface.html?_ijt=2ict1dbompjbbvbkrq6etf56rn&_ij_reload=RELOAD_ON_SAVE"));
-            } catch (Exception e) {
-            logger.fatal(e);
-            e.printStackTrace();
-        }
     }
 
     static class MyHandler implements HttpHandler {
@@ -56,6 +45,14 @@ public class SimpleHttpServer {
             exchange.getResponseHeaders().add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
             exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+            String method = exchange.getRequestMethod();
+
+            if ("OPTIONS".equalsIgnoreCase(method)) {
+                //Pre-flight запрос, отвечаем необходимыми заголовками и пустым телом
+                exchange.sendResponseHeaders(204, -1);
+                exchange.close();
+                return;
+            }
 
             if ("POST".equals(exchange.getRequestMethod())) {
                 try {

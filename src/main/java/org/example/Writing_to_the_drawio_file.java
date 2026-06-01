@@ -19,7 +19,7 @@ public class Writing_to_the_drawio_file {
         //читаем с каким файлом и работать вставляем таблицу
         try {
             logger.info("чтение файла .drawio");
-            String sheet = "<mxCell id=\"1\" parent=\"0\"/";
+            String sheet = "<mxCell id=\"1\" parent=\"0\"";
             String empty_sheet = sheet+"/>";
             String recorded_sheet = sheet + " " +"/>";
                     //indexOf
